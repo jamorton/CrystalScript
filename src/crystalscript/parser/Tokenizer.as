@@ -162,7 +162,7 @@
 		{
 			if (_token.type == type)
 				return true;
-			thow new UnexpectedTokenException(_token, type);
+			throw new UnexpectedTokenException(_token, type);
 			return false;
 		}
 		
