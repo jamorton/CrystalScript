@@ -1,0 +1,93 @@
+﻿ ______                    __          __ _______             __         __   
+|      |.----.--.--.-----.|  |_.---.-.|  |     __|.----.----.|__|.-----.|  |_ 
+|   ---||   _|  |  |__ --||   _|  _  ||  |__     ||  __|   _||  ||  _  ||   _|
+|______||__| |___  |_____||____|___._||__|_______||____|__|  |__||   __||____|
+             |_____|                                             |__|   
+			 
+
+
+=============
+Introduction
+=============
+
+Blah blah blah it's great !
+
+
+
+=============
+Language Style
+=============
+
+CrystalScript has many influences, the most prominant being Python, AS3,
+and Lua. What follows is a list of the guidelines that are used when
+designing and implementing CrystalScript features. This list was inspired
+by the Zen of Python (Pep 20)
+
+Prefer:
+
+	- Explicitness
+	- Simplicity
+	- Clarity
+	- Intuitiveness
+	- Speed
+	
+Avoid:
+	
+	- "Magic" or Implicitness
+	- Ambiguity
+	- Special Cases
+	- Complexity
+	
+
+
+=============
+Implemenation Details
+=============
+
+--- Goals ---
+
+Efficiency is the main concern of the implementation. The focus of this is on speed, and
+not memory usage. Parsing/Compilation time (or any overhead time before runtime) is not
+an important factor. No concern is given to efficiency of this - if we can sacrifice
+parse efficiency for runtime efficiency, it should almost always be done.
+
+
+--- Parsing ---
+
+CrystalScript currently uses an extremely simple regex-based tokenizer. A single large
+regex is assembled from regex fragments corresponding to each token. This is run on the input
+text and then the token with the matching regex is returned.
+
+An abstract syntax tree is assembled from the tokens using a simple recursive descent
+parser. Currently, no concrete syntax tree (parse tree) is built or used in the process.
+
+The AST is then subjected to an optimization pass (currently not implemented).
+
+
+#### Runtime ####
+
+There are two separate goals for executing CrystalScript code:
+	- Interpreted by a virtual machine
+	- Compiled to ABC (Actionscript Byte Code) and dynamically loaded into
+	  the program
+
+The first method is much easier to implement, but it will also be much slower
+than the second option, which is extremely hard to implement. As such, we will start
+by implementing the interpreted option, and after that we will attempt compiling
+directly to ABC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+﻿package crystalscript.parser.ast 
+{
+	
+	/**
+	 * ...
+	 * @author Jon Morton
+	 */
+	public class AstNode
+	{
+		
+		protected var _type:AstNodeType;
+		protected var _sub:AstNodeType;
+		
+		public function AstNode(type:AstNodeType, subtype:AstNodeType = null) 
+		{
+			_type = type;
+			_sub = subtype;
+			if (subtype == null)
+				_sub = AstNodeType.NO_SUBTYPE;
+		}
+		
+		public function get type():AstNodeType { return _type; }
+		
+		public function set type(value:AstNodeType):void 
+		{
+			_type = value;
+		}
+		
+		public function get sub():AstNodeType { return _sub; }
+		
+		public function set sub(value:AstNodeType):void 
+		{
+			_sub = value;
+		}
+		
+		public function toString(level:Number = 0):String
+		{
+			return "<AstNode " + _type.toString() + ">";
+		}
+		
+	}
+	
+}

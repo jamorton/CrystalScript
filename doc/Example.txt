@@ -1,0 +1,13 @@
+﻿
+
+
+x = 5
+y = 6
+
+sum = x + y
+
+
+if sum > 10
+	print("Sum is more than 10!")
+end
+

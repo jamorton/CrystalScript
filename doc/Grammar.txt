@@ -1,0 +1,60 @@
+﻿
+//============================ LEXER RULES ============================//
+
+Letter   ::= 'A'..'Z' | 'a'..'z'
+Digit    ::= '0'..'9'
+HexDigit ::= Digit | 'A'..'F' | 'a'..'f'
+
+Sign           ::= ['+' | '-']
+NumberExponent ::= ('e' | 'E') Sign Digit {Digit}
+Integer        ::= Digit {Digit}
+
+DecimalNumber  ::= Sign Integer ['.' Integer] [NumberExponent]
+HexNumber      ::= Sign '0x' HexDigit {HexDigit}
+
+Number     ::= DecimalNumber | HexNumber
+IdPart     ::= Letter | '_' | '$'
+Identifier ::= IdPart {IdPart Digit}
+
+Comparison ::= '<' | '>' | '<=' | '>=' | '==' | '!='
+
+
+Literal ::= Number
+
+
+
+//============================ PARSER RULES ============================//
+
+block ::= {statement}
+
+statement ::= assignment    |
+              function_call |
+			  if_block      |
+			  loop_block    |
+			  while_block	|
+			  breakStmt     |
+			  continueStmt  |
+			  returnStmt
+			  
+
+breakStmt    ::= 'break'
+continueStmt ::= 'continue'
+returnStmt   ::= 'return' expression
+
+	
+assignment    ::= Identifier '=' expression
+function_call ::= Identifier '(' [expression] {',' expression} ')'
+if_block      ::= 'if' expression block 'end'
+loop_block    ::= 'loop' block 'end'
+while_block   ::= 'while' expression block 'end'
+
+expression         ::= or_expression
+or_expression      ::= and_expression {'or' and_expression}
+and_expression     ::= compare_expression {'and' compare}
+compare_expression ::= add_expression {Comparison add_expression}
+add_expression     ::= mul_expression {'+' | '-' mul_expression}
+mul_expression     ::= unary_expression {'*' | '/' | 'mod' unary_expression}
+unary_expression   ::= {'not' | '-'} atom_expression
+atom_expression    ::= Identifier | function_call | '(' expression ')' | Literal
+
+
