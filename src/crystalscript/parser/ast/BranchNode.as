@@ -14,6 +14,7 @@
 		{
 			super(type, subtype);
 			_children = new Vector.<AstNode>();
+			_isLeaf = false;
 		}
 		
 		public function addChild(bn:AstNode):void

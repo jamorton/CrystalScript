@@ -11,6 +11,8 @@
 		protected var _type:AstNodeType;
 		protected var _sub:AstNodeType;
 		
+		protected var _isLeaf:Boolean = false;
+		
 		public function AstNode(type:AstNodeType, subtype:AstNodeType = null) 
 		{
 			_type = type;
@@ -32,6 +34,8 @@
 		{
 			_sub = value;
 		}
+		
+		public function get isLeaf():Boolean { return _isLeaf; }
 		
 		public function toString(level:Number = 0):String
 		{

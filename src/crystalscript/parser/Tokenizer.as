@@ -166,10 +166,6 @@
 			return false;
 		}
 		
-		
-		
-		
-		
 		public function get source():String { return _source; }
 		
 		public function set source(value:String):void 

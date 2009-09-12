@@ -14,6 +14,7 @@
 		{
 			super(type, subtype);
 			_text = text;
+			_isLeaf = true;
 		}
 		
 		public function get text():String { return _text; }
