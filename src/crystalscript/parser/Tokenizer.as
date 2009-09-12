@@ -42,7 +42,7 @@
 		private var _position:Number;
 		
 		private var _token:Token;
-		private var _next_token:Token;
+		private var _nextToken:Token;
 		
 		private var _line:Number;
 		
@@ -52,7 +52,7 @@
 			_position   = 0;
 			_line       = 1;
 			_token      = new Token(TokenType.NONE, "<NONE>");
-			_next_token = new Token(TokenType.NONE, "<NONE>");
+			_nextToken = new Token(TokenType.NONE, "<NONE>");
 			buildRegex();
 		}
 		
@@ -106,7 +106,7 @@
 			// end of script
 			if (_position >= _source.length) 
 			{
-				_next_token = new Token(TokenType.NONE, "<NONE>");
+				_nextToken = new Token(TokenType.NONE, "<NONE>");
 				_token = new Token(TokenType.EOF, "<EOF>");
 				return;
 			}
@@ -127,8 +127,8 @@
 			type = reservedWords(result[0], type);
 			var token:Token = new Token(type, result[0]);
 			
-			_token = _next_token;
-			_next_token = token;
+			_token = _nextToken;
+			_nextToken = token;
 			
 			// happens on first next
 			if (_token.type == TokenType.NONE)
@@ -155,7 +155,7 @@
 		
 		public function peek():Token 
 		{
-			return _next_token;
+			return _nextToken;
 		}
 		
 		public function expect(type:TokenType):Boolean 

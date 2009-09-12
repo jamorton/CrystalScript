@@ -1,6 +1,8 @@
 ﻿package crystalscript.etc 
 {
 
+	import flash.accessibility.Accessibility;
+	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	
 	public class Util {
@@ -10,9 +12,18 @@
 		public static function getClassName(o:Object):String
 		{
 			var fullClassName:String = getQualifiedClassName(o);
+			
+			var a:ByteArray = new ByteArray();
+			
 			return fullClassName.slice(fullClassName.lastIndexOf("::") + 1);
 		}
 		
+		
+		public static function assert(test:Boolean, extra:String = "(no info)"):void 
+		{
+			if (!test)
+				throw new Error("Assertion failed: " + extra);
+		}
 		
 		
 		/**

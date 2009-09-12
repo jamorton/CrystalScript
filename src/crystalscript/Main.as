@@ -7,6 +7,10 @@
 	import crystalscript.parser.TokenType;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.utils.Dictionary;
+	
+	import crystalscript.avm2.abc.*;
+	import crystalscript.avm2.name.*;
 	
 	/**
 	 * ...
