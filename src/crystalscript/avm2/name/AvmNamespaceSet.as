@@ -1,5 +1,6 @@
 ﻿package crystalscript.avm2.name 
 {
+	import crystalscript.etc.Util;
 	
 	/**
 	 * ...
@@ -15,12 +16,25 @@
 			_namespaces = new Vector.<AvmNamespace>();
 		}
 		
-		public function hash():String 
+		public function hash():uint 
 		{
-			var s:String;
-			for each(var n:Namespace in _namespaces)
-				s += n.hash() + "|";
-			return s;
+			var hash:uint = 2166136261;
+			for (var i:uint = 0, k:uint = length; i < k; i++) 
+			{
+				var n:AvmNamespace = _namespaces[i];
+				hash = (h * 16777619) ^ n.hash();
+			}
+			return hash;
+		}
+		
+		public function equalTo(val:AvmNamespaceSet):Boolean 
+		{
+			if (length != val.length) return false;
+			for (var i:uint = 0, k:uint = length; i < k; i++) 
+			{
+				if (!_namespaces[i].equalTo(val.namespaces[i])) return false;
+			}
+			return true;
 		}
 		
 		public function add(ns:AvmNamespace):uint 

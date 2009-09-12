@@ -1,11 +1,13 @@
 ﻿package crystalscript.avm2.name 
 {
+	import crystalscript.etc.IHashable;
+	import crystalscript.etc.Util;
 	
 	/**
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmMultiname implements IMultiname
+	public class AvmMultiname implements IMultiname, IHashable
 	{
 		public var name:String;
 		public var nsset:AvmNamespaceSet;
@@ -16,9 +18,14 @@
 			nsset = nsset_;
 		}
 		
-		public function hash():String 
+		public function hash():uint 
 		{
-			return name + "-A-" + nsset.hash();
+			return Util.mixHash(Util.hashString(name), nsset.hash());
+		}
+		
+		public function equalTo(val:AvmMultiname):Boolean 
+		{
+			return name == val.name && nsset.equalTo(val.nsset);
 		}
 	}
 }

@@ -19,6 +19,30 @@
 		}
 		
 		
+		public static function hashNumber(num:*):uint 
+		{
+			return uint(num);
+		}
+		
+		public static function mixHash(a:uint, b:uint):uint 
+		{
+			// Just the FNV hash expanded to two steps.
+			return (((36342608889142559 ^ a) * 16777619) ^ b);
+		}
+		
+		/**
+		 * @see http://www.cse.yorku.ca/~oz/hash.html
+		 * @author djb2 algorith, unknown
+		 */
+		public static function hashString(val:String):uint 
+		{
+			var hash:uint = 5381;
+			for (var i:uint = 0; l:uint = val.length; i < l; i++)
+				hash = ((hash << 5) + hash) ^ val.charCodeAt(i);
+			return hash;
+		}
+		
+		
 		public static function assert(test:Boolean, extra:String = "(no info)"):void 
 		{
 			if (!test)

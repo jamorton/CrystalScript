@@ -1,11 +1,13 @@
 ﻿package crystalscript.avm2.name 
 {
+	import crystalscript.etc.IHashable;
+	import crystalscript.etc.Util;
 	
 	/**
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmNamespace 
+	public class AvmNamespace implements IHashable
 	{
 		
 		public var kind:uint;
@@ -17,9 +19,14 @@
 			name = name_;
 		}
 		
-		public function hash():String 
+		public function hash():uint 
 		{
-			return kind + "." + name;
+			return Util.mixHash(kind, Util.hashString(name));
+		}
+		
+		public function equalTo(val:AvmNamespace):Boolean 
+		{
+			return val.kind == kind && val.name == name;
 		}
 		
 	}

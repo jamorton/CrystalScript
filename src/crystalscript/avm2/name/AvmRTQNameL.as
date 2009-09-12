@@ -1,20 +1,25 @@
 ﻿package crystalscript.avm2.name 
 {
-	
+	import crystalscript.etc.IHashable;
 	/**
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmRTQNameL implements IMultiname
+	public class AvmRTQNameL implements IMultiname, IHashable
 	{
 
 		public function AvmRTQNameL()
 		{
 		}
 		
-		public function hash():String 
+		public function hash():uint 
 		{
-			return "-D-";
+			return 1;
+		}
+		
+		public function equalTo(val:AvmRTQNameL):Boolean 
+		{
+			return true;
 		}
 	}
 }
