@@ -51,13 +51,13 @@
 		public function uint30(m:uint):void
 		{
 			Util.assert(m < 1073741824);
-			uint32(val);
+			uint32(m);
 		}
 		
 		public function int30(m:int):void
 		{
 			Util.assert(-1073741824 <= m && m < 1073741824);
-			if (val < 0)
+			if (m < 0)
 				uint32(-m);
 			else
 				uint32(uint(m));
@@ -86,7 +86,7 @@
 		/**
 		 * @author Adobe (http://hg.mozilla.org/tamarin-redux/raw-file/0244f48c3ce1/esc/src/bytes-tamarin.es)
 		 */
-		function uint32(val:uint):void
+		public function uint32(val:uint):void
 		{
 			if (val < 0x80)
 			{
@@ -130,7 +130,7 @@
 		public function get length():uint { return _bytes.length; }
 		
 		public function get position():uint { return _bytes.position }
-		public function set position(val:uint):void { _bytes.position = val);
+		public function set position(val:uint):void { _bytes.position = val };
 	}
 	
 }

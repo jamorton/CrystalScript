@@ -57,6 +57,23 @@
 				rehash();
 		}
 		
+		public function toArray():Array 
+		{
+			var arr:Array = new Array();
+			for (var i:uint = 0, k:uint = _length; i < k; i++) 
+			{
+				var list:Array = _table[i];
+				for (var j:uint = 0, l:uint = list.length; j < l; j++) 
+				{
+					var entry:HashEntry = list[j];
+					var m:Object = new Object();
+					m["key"] = entry.key;
+					m["value"] = entry.value;
+				}
+			}
+			return arr;
+		}
+		
 		private function eq(elem1:*, elem2:*):Boolean
 		{
 			if (_eqFunc == null) return elem1.equalTo(elem2);

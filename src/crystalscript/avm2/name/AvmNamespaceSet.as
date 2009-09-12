@@ -1,15 +1,18 @@
 ﻿package crystalscript.avm2.name 
 {
 	import crystalscript.etc.Util;
-	
+	import crystalscript.avm2.abc.AbcInfo;
+
 	/**
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmNamespaceSet 
+	public class AvmNamespaceSet
 	{
 		
-		private var _namespaces:Vector.<AvmNamespace>();
+		private var _namespaces:Vector.<AvmNamespace>;
+		
+		public const KIND:uint = AbcInfo.CONSTANT_Namespace_Set;
 		
 		public function AvmNamespaceSet() 
 		{
@@ -22,7 +25,7 @@
 			for (var i:uint = 0, k:uint = length; i < k; i++) 
 			{
 				var n:AvmNamespace = _namespaces[i];
-				hash = (h * 16777619) ^ n.hash();
+				hash = (hash * 16777619) ^ n.hash();
 			}
 			return hash;
 		}

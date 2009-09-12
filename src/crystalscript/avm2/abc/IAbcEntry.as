@@ -7,7 +7,7 @@
 	 */
 	public interface IAbcEntry 
 	{
-		function serialize():AbcByteStream;	
+		function serialize(bytes:AbcByteStream):void;	
 	}
 	
 }

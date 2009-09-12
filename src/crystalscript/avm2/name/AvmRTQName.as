@@ -2,6 +2,8 @@
 {
 	import crystalscript.etc.IHashable;
 	import crystalscript.etc.Util;
+	import crystalscript.avm2.abc.AbcInfo;
+
 	/**
 	 * ...
 	 * @author Jon Morton
@@ -9,6 +11,8 @@
 	public class AvmRTQName implements IMultiname, IHashable
 	{
 		public var name:String;
+		
+		public const KIND:uint = AbcInfo.CONSTANT_RTQname;
 		
 		public function AvmRTQName(name_:String) 
 		{
@@ -20,8 +24,9 @@
 			return Util.hashString(name);
 		}
 		
-		public function equalTo(val:AvmRTQName):Boolean 
+		public function equalTo(val:*):Boolean 
 		{
+			if (!(val is AvmRTQName)) return false;
 			return name == val.name;
 		}
 	}

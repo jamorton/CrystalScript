@@ -7,7 +7,7 @@
 	 */
 	public interface IMultiname 
 	{
-		function hash():String;
+		
 	}
 	
 }

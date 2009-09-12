@@ -37,7 +37,7 @@
 		public static function hashString(val:String):uint 
 		{
 			var hash:uint = 5381;
-			for (var i:uint = 0; l:uint = val.length; i < l; i++)
+			for (var i:uint = 0, l:uint = val.length; i < l; i++)
 				hash = ((hash << 5) + hash) ^ val.charCodeAt(i);
 			return hash;
 		}

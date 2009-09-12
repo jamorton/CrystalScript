@@ -2,6 +2,8 @@
 {
 	import crystalscript.etc.IHashable;
 	import crystalscript.etc.Util;
+	import crystalscript.avm2.abc.AbcInfo;
+
 	
 	/**
 	 * ...
@@ -12,6 +14,8 @@
 		
 		public var kind:uint;
 		public var name:String;
+		
+		public const KIND:uint = AbcInfo.CONSTANT_Namespace;
 		
 		public function AvmNamespace(kind_:uint, name_:String = "*") 
 		{
@@ -24,7 +28,7 @@
 			return Util.mixHash(kind, Util.hashString(name));
 		}
 		
-		public function equalTo(val:AvmNamespace):Boolean 
+		public function equalTo(val:*):Boolean 
 		{
 			return val.kind == kind && val.name == name;
 		}

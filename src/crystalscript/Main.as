@@ -28,6 +28,14 @@
 		
 		private function init(e:Event = null):void 
 		{
+			
+			var ma:AbcConstantPool;
+			var mb:AbcByteStream;
+			var mc:AvmMultiname;
+			var md:AvmNamespaceSet;
+			var mf:AvmNamespace;
+			var me:AvmRTQName;
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			var source:String = "loop\na = random()\nif a == 5\na = b + 6\nend\nend";

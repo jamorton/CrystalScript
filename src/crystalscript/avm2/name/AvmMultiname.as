@@ -1,7 +1,9 @@
 ﻿package crystalscript.avm2.name 
 {
+	import crystalscript.avm2.abc.AbcInfo;
 	import crystalscript.etc.IHashable;
 	import crystalscript.etc.Util;
+
 	
 	/**
 	 * ...
@@ -11,6 +13,8 @@
 	{
 		public var name:String;
 		public var nsset:AvmNamespaceSet;
+		
+		public const KIND:uint = AbcInfo.CONSTANT_Multiname;
 		
 		public function AvmMultiname(name_:String, nsset_:AvmNamespaceSet) 
 		{
@@ -23,8 +27,9 @@
 			return Util.mixHash(Util.hashString(name), nsset.hash());
 		}
 		
-		public function equalTo(val:AvmMultiname):Boolean 
+		public function equalTo(val:*):Boolean 
 		{
+			if (!(val is AvmMultiname)) return false;
 			return name == val.name && nsset.equalTo(val.nsset);
 		}
 	}

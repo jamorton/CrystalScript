@@ -3,6 +3,8 @@
 	import crystalscript.avm2.name.AvmMultiname;
 	import crystalscript.avm2.name.AvmNamespace;
 	import crystalscript.avm2.name.AvmNamespaceSet;
+	import crystalscript.etc.HashTable;
+	import crystalscript.etc.Util;
 		
 	/**
 	 * @see AbcConstantPool in ESC sources
@@ -10,51 +12,46 @@
 	 */
 	public class AbcConstantPool implements IAbcEntry
 	{
+		private var _intMap:HashTable;
+		private var _uintMap:HashTable;
+		private var _doubleMap:HashTable;
+		private var _stringMap:HashTable;
+		private var _namespaceMap:HashTable;
+		private var _nssetMap:HashTable;
+		private var _multinameMap:HashTable;
 		
-		private var _intBytes:AbcByteStream;
-		private var _uintBytes:AbcByteStream;
-		private var _doubleBytes:AbcByteStream;
-		private var _stringBytes:AbcByteStream;
-		private var _namespaceBytes:AbcByteStream;
-		private var _nssetBytes:AbcByteStream;
-		private var _multinameBytes:AbcByteStream;
-		
-		private var _intMap:Array;
-		private var _uintMap:Array;
-		private var _doubleMap:Array;
-		private var _stringMap:Array;
-		private var _namespaceMap:Array;
-		private var _nssetMap:Array;
-		private var _multinameMap:Array;
+		private var _intLength:uint       = 1;
+		private var _uintLength:uint      = 1;
+		private var _doubleLength:uint    = 1;
+		private var _stringLength:uint    = 1;
+		private var _namespaceLength:uint = 1;
+		private var _nssetLength:uint     = 1;
+		private var _multinameLength:uint = 1;
 		
 		public function AbcConstantPool()
 		{
-			_intMap       = new Array(); _intMap.length       = 1;
-			_uintMap      = new Array(); _uintMap.length      = 1;
-			_doubleMap    = new Array(); _doubleMap.length    = 1;
-			_stringMap    = new Object(); _stringMap.length    = 1;
-			_namespaceMap = new Object(); _namespaceMap.length = 1;
-			_nssetMap     = new Object(); _nssetMap.length     = 1;
-			_multinameMap = new Object(); _multinameMap.length = 1;
+			function eqn(a:*, b:*):Boolean 
+			{
+				return a == b;
+			}
 			
-			_intBytes       = new AbcByteStream();
-			_uintBytes      = new AbcByteStream();
-			_doubleBytes    = new AbcByteStream();
-			_stringBytes    = new AbcByteStream();
-			_namespaceBytes = new AbcByteStream();
-			_nssetBytes     = new AbcByteStream();
-			_multinameBytes = new AbcByteStream();
+			_intMap       = new HashTable(Util.hashNumber, eqn, 0);
+			_uintMap      = new HashTable(Util.hashNumber, eqn, 0);
+			_doubleMap    = new HashTable(Util.hashNumber, eqn, 0);
+			_stringMap    = new HashTable(Util.hashString, eqn, 0);
+			_namespaceMap = new HashTable(null, null, 0);
+			_nssetMap     = new HashTable(null, null, 0);
+			_multinameMap = new HashTable(null, null, 0);
 		}                            
 		
 		public function int32(val:int):uint 
 		{
 			if (val == 0) return 0;
-			var index:uint = _intMap[val];
-			if (index == undefined)
+			var index:uint = _intMap.read(val);
+			if (index == 0)
 			{
-				index = _intMap.length;
-				_intMap[val] = index;
-				_intBytes.int32(val);
+				index = _intLength++;
+				_intMap.write(val, index);
 			}
 			return index;
 		}
@@ -62,12 +59,11 @@
 		public function uint32(val:int):uint 
 		{
 			if (val == 0) return 0;
-			var index:uint = _uintMap[val];
-			if (index == undefined)
+			var index:uint = _uintMap.read(val);
+			if (index == 0)
 			{
-				index = _uintMap.length;
-				_uintMap[val] = index;
-				_uintBytes.uint32(val);
+				index = _uintLength++;
+				_uintMap.write(val, index);
 			}
 			return index;
 		}
@@ -75,12 +71,11 @@
 		public function float64(val:Number):uint 
 		{
 			if (isNaN(val)) return 0;
-			var index:uint = _doubleMap[val];
-			if (index == undefined)
+			var index:uint = _doubleMap.read(val);
+			if (index == 0)
 			{
-				index = _doubleMap.length;
-				_uintMap[val] = index;
-				_doubleBytes.float64(val);
+				index = _doubleLength++;
+				_doubleMap.write(val, index);
 			}
 			return index;
 		}
@@ -88,13 +83,11 @@
 		public function utf8(val:String):uint 
 		{
 			if (val == "" || !val) return 0;
-			var index:uint = _stringMap[val];
-			if (index == undefined)
+			var index:uint = _stringMap.read(val);
+			if (index == 0)
 			{
-				index = _stringMap.length;
-				_stringMap[val] = index;
-				_stringBytes.uint30(utf8length(val));
-				_stringBytes.utf8(val);
+				index = _stringLength++;
+				_stringMap.write(val, index);
 			}
 			return index;
 		}
@@ -102,7 +95,7 @@
 		/**
 		 * @author Tamarin Project
 		 */
-		function utf8length(s:String):uint
+		public  function utf8length(s:String):uint
 		{
 			var i:uint = 0;
 			var limit:uint = 0;
@@ -117,41 +110,44 @@
 			return b.length;
 		}
 		
-		public function NamespaceSet_(val:AvmNamespaceSet):uint 
+		public function namespaceset(val:AvmNamespaceSet):uint 
 		{
 			if (!val || val.length < 1) return 0;
-			var hash:String = val.hash();
-			var index:uint = _nssetMap[hash];
-			if (index == undefined) 
+			var index:uint = _nssetMap.read(val);
+			if (index == 0) 
 			{
-				index = _nssetMap.length;
-				_nssetMap[hash] = index;
-				_nssetBytes.uint30(val.length);
-				for each(var ns:Avm2Namespace in val.namespaces)
-					_nssetBytes.uint30(Namespace_(ns));
+				index = _nssetLength++;
+				_nssetMap.write(val, index);
 			}
 			return index;
 		}
 		
-		public function Namespace_(val:AvmNamespace):uint
+		public function namespace_(val:AvmNamespace):uint
 		{
-			if (val.name == "*" | !val) return 0;
-			var hash:String = val.hash();
-			var index:uint = _namespaceMap[hash];
-			if (index == undefined) 
+			if (val.name == "*" || !val) return 0;
+			var index:uint = _namespaceMap.read(val);
+			if (index == 0) 
 			{
-				index = _namespaceMap.length;
-				_namespaceMap[hash] = index;
-				_namespaceBytes.uint8(val.kind);
-				_namespaceBytes.uint30(utf8(val.name));
+				index = _namespaceLength++;
+				_namespaceMap.write(val, index);
 			}
 			return index;
 		}
 		
-		
+		public function multiname(val:AvmMultiname):uint
+		{
+			if (val.name == "*" || !val) return 0;
+			var index:uint = _multinameMap.read(val);
+			if (index == 0) 
+			{
+				index = _multinameLength++;
+				_multinameMap.write(val, index);
+			}
+			return index;
+		}
 		// no support for E4X attributes (RTQNameA, MultinameA, etc) yet..
 		// do we need it?
-		
+		/*
 		public function QName_(val:AvmMultiname):uint 
 		{
 			var hash:String = val.hash();
@@ -222,33 +218,86 @@
 			}
 			return index;
 		}
+		*/
 		
-		public function serialize():AbcByteStream
+		public function serialize(bytes:AbcByteStream):void
 		{
-			var write:AbcByteStream = new AbcByteStream();
 			
-			write.uint30(_intMap.length);
-			write.addBytes(_intBytes);
+			var o:Object;
 			
-			write.uint30(_uintMap.length);
-			write.addBytes(_uintBytes);
+			// this is just a big fucking hack. grrarrggh >:(
 			
-			write.uint30(_doubleMap.length);
-			write.addBytes(_doubleBytes);
+			// Namespaces, multinames, etc have to be written first
+			// to make sure the indexes they reference exist (strings, etc)
 			
-			write.uint30(_stringMap.length);
-			write.addBytes(_stringBytes);
 			
-			write.uint30(_namespaceMap.length);
-			write.addBytes(_namespaceBytes);
+			/***** MULTINAMES ****/
+			var multiname_tmp:AbcByteStream = new AbcByteStream();
+			for each(o in _multinameMap.toArray()) 
+			{
+				multiname_tmp.uint8(o.key.KIND);
+				switch (o.key.KIND) 
+				{
+					case AbcInfo.CONSTANT_Qname:
+						multiname_tmp.uint30(namespace_(o.key.ns));
+					case AbcInfo.CONSTANT_Multiname:
+					case AbcInfo.CONSTANT_RTQname:
+						multiname_tmp.uint30(utf8(o.key.name));
+						break;
+					case AbcInfo.CONSTANT_Multiname:
+					case AbcInfo.CONSTANT_MultinameL:
+						multiname_tmp.uint30(namespaceset(o.key.nsset));
+						break;
+				}
+			}
 			
-			write.uint30(_nssetMap.length);
-			write.addBytes(_nssetBytes);
+			/***** NAMESPACE SETS ****/
+			var nsset_tmp:AbcByteStream = new AbcByteStream();
+			for each(o in _nssetMap.toArray()) 
+			{
+				nsset_tmp.uint30(o.key.length);
+				for each(var i:AvmNamespace in o.key.namespaces)
+					nsset_tmp.uint30(namespace_(i));
+			}
 			
-			write.uint30(_multinameMap.length);
-			write.addBytes(_multinameBytes);
+			/***** NAMESPACES ****/
+			var ns_tmp:AbcByteStream = new AbcByteStream();
+			for each(o in _namespaceMap.toArray()) 
+			{
+				ns_tmp.uint8(o.key.kind);
+				ns_tmp.uint30(utf8(o.key.name));
+			}
 			
-			return write;
+			
+			
+			bytes.uint30(_intLength);
+			for each(o in _intMap.toArray()) 
+				bytes.int32(o.key);
+			
+			bytes.uint30(_uintLength);
+			for each(o in _uintMap.toArray()) 
+				bytes.uint32(o.key);
+			
+			bytes.uint30(_doubleLength);
+			for each(o in _doubleMap.toArray()) 
+				bytes.float64(o.key);
+			
+			bytes.uint30(_stringLength);
+			for each(o in _doubleMap.toArray()) 
+			{
+				bytes.uint30(utf8length(o.key));
+				bytes.float64(o.key);
+			}
+			
+			bytes.uint30(_namespaceLength);
+			bytes.addBytes(ns_tmp);
+			
+			bytes.uint30(_nssetLength);
+			bytes.addBytes(nsset_tmp);
+			
+			bytes.uint30(_multinameLength);
+			bytes.addBytes(multiname_tmp);
+			
 		}
 	}
 }

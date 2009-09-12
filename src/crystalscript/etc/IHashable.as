@@ -8,7 +8,7 @@
 	public interface IHashable 
 	{
 		function hash():uint;
-		function equalTo(val:IHashable):Boolean;
+		function equalTo(val:*):Boolean;
 	}
 	
 }
