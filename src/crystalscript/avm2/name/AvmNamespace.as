@@ -5,16 +5,16 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class Avm2Namespace 
+	public class AvmNamespace 
 	{
 		
-		public var kind:uint = 0;
-		public var name:uint = 0;
+		public var kind:uint;
+		public var name:String;
 		
-		public function Avm2Namespace(tkind:uint, tname:uint) 
+		public function AvmNamespace(kind_:uint, name_:String = "*") 
 		{
-			kind = tkind;
-			name = tname;
+			kind = kind_;
+			name = name_;
 		}
 		
 		public function hash():String 

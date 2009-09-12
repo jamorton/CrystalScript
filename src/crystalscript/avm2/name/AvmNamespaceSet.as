@@ -5,33 +5,32 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class Avm2NamespaceSet 
+	public class AvmNamespaceSet 
 	{
 		
-		private var _namespaces:Vector.<Avm2Namespace>();
+		private var _namespaces:Vector.<AvmNamespace>();
 		
-		public function Avm2NamespaceSet() 
+		public function AvmNamespaceSet() 
 		{
-			_namespaces = new Vector.<Avm2Namespace>();
+			_namespaces = new Vector.<AvmNamespace>();
 		}
 		
 		public function hash():String 
 		{
-			// TODO: This sucks
 			var s:String;
 			for each(var n:Namespace in _namespaces)
 				s += n.hash() + "|";
 			return s;
 		}
 		
-		public function add(ns:Avm2Namespace):uint 
+		public function add(ns:AvmNamespace):uint 
 		{
 			return _namespaces.push(ns) - 1;
 		}
 		
 		public function get length():uint { return _namespaces.length; }
 		
-		public function get namespaces():Vector.<Avm2Namespace> { return _namespaces; }
+		public function get namespaces():Vector.<AvmNamespace> { return _namespaces; }
 		
 	}
 	

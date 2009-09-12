@@ -1,5 +1,6 @@
 ﻿package crystalscript
 {
+	import crystalscript.etc.HashTable;
 	import crystalscript.etc.Util;
 	import crystalscript.parser.Parser;
 	import crystalscript.parser.Token;

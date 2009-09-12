@@ -1,24 +1,15 @@
 ﻿package crystalscript.avm2.abc 
 {
-	import crystalscript.avm2.name.Avm2Multiname;
-	import crystalscript.avm2.name.Avm2Namespace;
-	import crystalscript.avm2.name.Avm2NamespaceSet;
+	import crystalscript.avm2.name.AvmMultiname;
+	import crystalscript.avm2.name.AvmNamespace;
+	import crystalscript.avm2.name.AvmNamespaceSet;
 		
 	/**
 	 * @see AbcConstantPool in ESC sources
 	 * @author Jon Morton
 	 */
-	public class AbcConstantPool 
+	public class AbcConstantPool implements IAbcEntry
 	{
-		/*
-		private var _intCount:uint;
-		private var _uintCount:uint;
-		private var _doubleCount:uint;
-		private var _stringCout:uint;
-		private var _namespaceCount:uint;
-		private var _nssetCount:uint;
-		private var _multinameCount:uint;
-		*/
 		
 		private var _intBytes:AbcByteStream;
 		private var _uintBytes:AbcByteStream;
@@ -41,10 +32,10 @@
 			_intMap       = new Array(); _intMap.length       = 1;
 			_uintMap      = new Array(); _uintMap.length      = 1;
 			_doubleMap    = new Array(); _doubleMap.length    = 1;
-			_stringMap    = new Array(); _stringMap.length    = 1;
-			_namespaceMap = new Array(); _namespaceMap.length = 1;
-			_nssetMap     = new Array(); _nssetMap.length     = 1;
-			_multinameMap = new Array(); _multinameMap.length = 1;
+			_stringMap    = new Object(); _stringMap.length    = 1;
+			_namespaceMap = new Object(); _namespaceMap.length = 1;
+			_nssetMap     = new Object(); _nssetMap.length     = 1;
+			_multinameMap = new Object(); _multinameMap.length = 1;
 			
 			_intBytes       = new AbcByteStream();
 			_uintBytes      = new AbcByteStream();
@@ -55,8 +46,9 @@
 			_multinameBytes = new AbcByteStream();
 		}                            
 		
-		public function int32_(val:int):uint 
+		public function int32(val:int):uint 
 		{
+			if (val == 0) return 0;
 			var index:uint = _intMap[val];
 			if (index == undefined)
 			{
@@ -67,8 +59,9 @@
 			return index;
 		}
 		
-		public function uint32_(val:int):uint 
+		public function uint32(val:int):uint 
 		{
+			if (val == 0) return 0;
 			var index:uint = _uintMap[val];
 			if (index == undefined)
 			{
@@ -79,8 +72,9 @@
 			return index;
 		}
 		
-		public function float64_(val:Number):uint 
+		public function float64(val:Number):uint 
 		{
+			if (isNaN(val)) return 0;
 			var index:uint = _doubleMap[val];
 			if (index == undefined)
 			{
@@ -91,8 +85,9 @@
 			return index;
 		}
 		
-		public function utf8_(val:String):uint 
+		public function utf8(val:String):uint 
 		{
+			if (val == "" || !val) return 0;
 			var index:uint = _stringMap[val];
 			if (index == undefined)
 			{
@@ -122,8 +117,9 @@
 			return b.length;
 		}
 		
-		public function NamespaceSet_(val:Avm2NamespaceSet):uint 
+		public function NamespaceSet_(val:AvmNamespaceSet):uint 
 		{
+			if (!val || val.length < 1) return 0;
 			var hash:String = val.hash();
 			var index:uint = _nssetMap[hash];
 			if (index == undefined) 
@@ -137,8 +133,9 @@
 			return index;
 		}
 		
-		public function Namespace_(val:Avm2Namespace):uint
+		public function Namespace_(val:AvmNamespace):uint
 		{
+			if (val.name == "*" | !val) return 0;
 			var hash:String = val.hash();
 			var index:uint = _namespaceMap[hash];
 			if (index == undefined) 
@@ -146,16 +143,16 @@
 				index = _namespaceMap.length;
 				_namespaceMap[hash] = index;
 				_namespaceBytes.uint8(val.kind);
-				_namespaceBytes.uint30(val.name);
+				_namespaceBytes.uint30(utf8(val.name));
 			}
 			return index;
 		}
 		
 		
-		// NO SUPPORT for E4X attributes (RTQNameA, MultinameA, etc) yet..
+		// no support for E4X attributes (RTQNameA, MultinameA, etc) yet..
 		// do we need it?
 		
-		public function QName_(val:Avm2Multiname):uint 
+		public function QName_(val:AvmMultiname):uint 
 		{
 			var hash:String = val.hash();
 			var index:uint = _multinameMap[hash];
@@ -170,7 +167,7 @@
 			return index;
 		}
 		
-		public function RTQName_(val:Avm2Multiname):uint 
+		public function RTQName_(val:AvmMultiname):uint 
 		{
 			var hash:String = val.hash();
 			var index:uint = _multinameMap[hash];
@@ -184,7 +181,7 @@
 			return index;
 		}
 		
-		public function RTQNameL_(val:Avm2Multiname):uint
+		public function RTQNameL_(val:AvmMultiname):uint
 		{
 			var hash:String = val.hash();
 			var index:uint = _multinameMap[hash];
@@ -197,7 +194,7 @@
 			return index;
 		}
 		
-		public function Multiname_(val:Avm2Multiname):uint
+		public function Multiname_(val:AvmMultiname):uint
 		{
 			var hash:String = val.hash();
 			var index:uint = _multinameMap[hash];
@@ -212,7 +209,7 @@
 			return index;
 		}
 		
-		public function MultinameL_(val:Avm2Multiname):uint
+		public function MultinameL_(val:AvmMultiname):uint
 		{
 			var hash:String = val.hash();
 			var index:uint = _multinameMap[hash];
@@ -226,8 +223,10 @@
 			return index;
 		}
 		
-		public function serialize(write:AbcByteStream):void
+		public function serialize():AbcByteStream
 		{
+			var write:AbcByteStream = new AbcByteStream();
+			
 			write.uint30(_intMap.length);
 			write.addBytes(_intBytes);
 			
@@ -248,6 +247,8 @@
 			
 			write.uint30(_multinameMap.length);
 			write.addBytes(_multinameBytes);
+			
+			return write;
 		}
 	}
 }
