@@ -126,6 +126,11 @@
 		}
 		
 		
+		public function toString():String 
+		{
+			return _bytes.toString();
+		}
+		
 		public function get bytes():ByteArray { return _bytes; }
 		public function get length():uint { return _bytes.length; }
 		
