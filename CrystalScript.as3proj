@@ -4,7 +4,7 @@
   <output>
     <movie disabled="False" />
     <movie input="" />
-    <movie path="bin/CrystalScript.swf" />
+    <movie path="bin\CrystalScript.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -70,7 +70,7 @@
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>cloc --out=$(ProjectDir)\doc\Lines.txt $(ProjectDir)\src</preBuildCommand>
+  <preBuildCommand>$(ProjectDir)\bin\cloc.exe --out=$(ProjectDir)\doc\Lines.txt $(ProjectDir)\src</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
