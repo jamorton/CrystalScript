@@ -15,8 +15,6 @@
 		public var kind:uint;
 		public var name:String;
 		
-		public const KIND:uint = AbcInfo.CONSTANT_Namespace;
-		
 		public function AvmNamespace(kind_:uint, name_:String = "*") 
 		{
 			kind = kind_;

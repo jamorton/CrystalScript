@@ -11,11 +11,11 @@
 	{
 		public var nsset:AvmNamespaceSet;
 		
-		public const KIND:uint = AbcInfo.CONSTANT_MultinameL;
+		public function get kind():uint { return AbcInfo.CONSTANT_MultinameL; }
 		
-		public function AvmMultinameL(nsset_:AvmNamespaceSet) 
+		public function AvmMultinameL(nsset:AvmNamespaceSet) 
 		{
-			nsset = nsset_;
+			this.nsset = nsset;
 		}
 		
 		public function hash():uint 
@@ -28,5 +28,7 @@
 			if (!(val is AvmMultinameL)) return false;
 			return val.nsset.equalTo(val.nsset);
 		}
+		
+		public function get name():String { return "*";  }
 	}
 }

@@ -31,18 +31,21 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			
 			var cp:AbcConstantPool = new AbcConstantPool();
 			
-			cp.int32(42);
-			var ns:AvmNamespaceSet = new AvmNamespaceSet();
-			ns.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "fooNs"));
-			cp.multiname(new AvmMultiname("foobar", ns));
+			var ns:AvmNamespace = new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "poop");
+			var x:AvmQName = new AvmQName("test", ns);
+			cp.multiname(x);
+			
+			
 			
 			var bs:AbcByteStream = new AbcByteStream();
-			
 			cp.serialize(bs);
+			trace(cp.utf8("poop"));
 			
-			trace(bs.toString());
+			trace(bs.hexDump());
+			
 			
 			/*
 			var source:String = "loop\na = random()\nif a == 5\na = b + 6\nend\nend";

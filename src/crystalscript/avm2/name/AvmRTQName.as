@@ -10,13 +10,11 @@
 	 */
 	public class AvmRTQName implements IMultiname, IHashable
 	{
-		public var name:String;
+		private var _name:String;
 		
-		public const KIND:uint = AbcInfo.CONSTANT_RTQname;
-		
-		public function AvmRTQName(name_:String) 
+		public function AvmRTQName(name:String) 
 		{
-			name  = name_;
+			_name  = name;
 		}
 		
 		public function hash():uint 
@@ -28,6 +26,15 @@
 		{
 			if (!(val is AvmRTQName)) return false;
 			return name == val.name;
+		}
+		
+		public function get kind():uint { return AbcInfo.CONSTANT_RTQName; }
+		
+		public function get name():String { return _name; }
+		
+		public function set name(value:String):void 
+		{
+			_name = value;
 		}
 	}
 }

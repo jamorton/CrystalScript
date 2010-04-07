@@ -8,8 +8,6 @@
 	 */
 	public class AvmRTQNameL implements IMultiname, IHashable
 	{
-
-		public const KIND:uint = AbcInfo.CONSTANT_RTQnameL;
 		
 		public function AvmRTQNameL()
 		{
@@ -25,5 +23,9 @@
 			if (!(val is AvmRTQNameL)) return false;
 			return true;
 		}
+		
+		public function get name():String { return "*"; }
+		
+		public function get kind():uint { return AbcInfo.CONSTANT_RTQNameL; }
 	}
 }

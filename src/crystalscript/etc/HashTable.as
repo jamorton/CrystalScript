@@ -1,5 +1,6 @@
 ﻿package crystalscript.etc 
 {
+	import flash.events.KeyboardEvent;
 	
 	/**
 	 * ...
@@ -35,11 +36,10 @@
 		{
 			var list:Array = _table[hash(key) & _divisor];
 			var k:uint = list.length;
-			var h:uint = hash(key);
 			for (var i:uint = 0; i < k; i++) 
 			{
 				var entry:HashEntry = list[i];
-				if (entry.hash == h && eq(key, entry.key))
+				if (eq(key, entry.key))
 					return entry.value;
 			}
 			return _default;
@@ -48,10 +48,11 @@
 		public function write(key:*, val:*):void
 		{
 			var entry:HashEntry = new HashEntry();
+			var h:uint = hash(key);
 			entry.key = key;
 			entry.value = val;
-			entry.hash = hash(key);
-			_table[entry.hash & _divisor].push(entry);
+			entry.hash = h;
+			_table[h & _divisor].push(entry);
 			_length++;
 			if (_length >= _size)
 				rehash();
@@ -59,16 +60,15 @@
 		
 		public function toArray():Array 
 		{
+			var i:uint, k:uint, j:uint, l:uint;
 			var arr:Array = new Array();
-			for (var i:uint = 0, k:uint = _length; i < k; i++) 
+			for (i = 0, k = _size; i < k; i++)
 			{
 				var list:Array = _table[i];
-				for (var j:uint = 0, l:uint = list.length; j < l; j++) 
+				for (j = 0, l = list.length; j < l; j++) 
 				{
 					var entry:HashEntry = list[j];
-					var m:Object = new Object();
-					m["key"] = entry.key;
-					m["value"] = entry.value;
+					arr.push({ "key": entry.key, "value": entry.value });
 				}
 			}
 			return arr;
@@ -87,11 +87,12 @@
 		}
 		
 		private function rehash():void 
-		{
-			_size << 1;
+		{	
+			var oldsize:uint = _size;
+			_size <<= 1;
 			_divisor = _size - 1;
 			var newtable:Array = makeTable();
-			for (var i:uint = 0; i < _size; i++) 
+			for (var i:uint = 0; i < oldsize; i++) 
 			{
 				var list:Array = _table[i];
 				var k:uint = list.length;
@@ -101,6 +102,7 @@
 					newtable[entry.hash & _divisor].push(entry);
 				}
 			}
+
 			_table = newtable;
 		}
 		
@@ -121,7 +123,7 @@
 internal class HashEntry 
 {
 	public var key:*;
-	public var hash:*;
+	public var hash:uint;
 	public var value:*;
 }
 

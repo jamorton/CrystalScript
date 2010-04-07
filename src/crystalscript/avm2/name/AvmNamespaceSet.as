@@ -12,8 +12,6 @@
 		
 		private var _namespaces:Vector.<AvmNamespace>;
 		
-		public const KIND:uint = AbcInfo.CONSTANT_Namespace_Set;
-		
 		public function AvmNamespaceSet() 
 		{
 			_namespaces = new Vector.<AvmNamespace>();

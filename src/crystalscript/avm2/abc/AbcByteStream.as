@@ -125,10 +125,31 @@
 			}
 		}
 		
+		public function hexDump():String
+		{
+			var table:Array = [
+				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"
+			]
+			var oldpos:int = _bytes.position;
+			var output:String = "";
+			_bytes.position = 0;
+
+			for (var i:int = 0; i < _bytes.length; i++)
+			{
+				var byte:uint = uint(_bytes.readUnsignedByte());
+				output += table[byte >> 4];
+				output += table[byte & 0xF] + " ";
+			}
+			
+			_bytes.position = oldpos;
+			return output;
+		}
+		
 		
 		public function toString():String 
 		{
 			return _bytes.toString();
+
 		}
 		
 		public function get bytes():ByteArray { return _bytes; }

@@ -11,15 +11,13 @@
 	 */
 	public class AvmMultiname implements IMultiname, IHashable
 	{
-		public var name:String;
+		private var _name:String;
 		public var nsset:AvmNamespaceSet;
 		
-		public const KIND:uint = AbcInfo.CONSTANT_Multiname;
-		
-		public function AvmMultiname(name_:String, nsset_:AvmNamespaceSet) 
+		public function AvmMultiname(name_:String, nsset:AvmNamespaceSet) 
 		{
-			name  = name_;
-			nsset = nsset_;
+			_name  = name;
+			this.nsset = nsset;
 		}
 		
 		public function hash():uint 
@@ -31,6 +29,15 @@
 		{
 			if (!(val is AvmMultiname)) return false;
 			return name == val.name && nsset.equalTo(val.nsset);
+		}
+		
+		public function get kind():uint { return AbcInfo.CONSTANT_Multiname; }
+		
+		public function get name():String { return _name; }
+		
+		public function set name(value:String):void 
+		{
+			_name = value;
 		}
 	}
 }
