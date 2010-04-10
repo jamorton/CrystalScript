@@ -14,7 +14,6 @@
 		public static const MINOR_VERSION:uint = 16;
 		public static const MAJOR_VERSION:uint = 46;
 		
-		
 		public static const CONSTANT_Void:uint                = 0x00;
 		public static const CONSTANT_Utf8:uint                = 0x01;
 		public static const CONSTANT_Decimal:uint             = 0x02;

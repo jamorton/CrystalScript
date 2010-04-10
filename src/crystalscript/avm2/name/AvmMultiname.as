@@ -12,23 +12,23 @@
 	public class AvmMultiname implements IMultiname, IHashable
 	{
 		private var _name:String;
-		public var nsset:AvmNamespaceSet;
+		private var _nsset:AvmNamespaceSet;
 		
-		public function AvmMultiname(name_:String, nsset:AvmNamespaceSet) 
+		public function AvmMultiname(name:String, nsset:AvmNamespaceSet) 
 		{
 			_name  = name;
-			this.nsset = nsset;
+			_nsset = nsset;
 		}
 		
 		public function hash():uint 
 		{
-			return Util.mixHash(Util.hashString(name), nsset.hash());
+			return Util.mixHash(Util.hashString(_name), nsset.hash());
 		}
 		
 		public function equalTo(val:*):Boolean 
 		{
 			if (!(val is AvmMultiname)) return false;
-			return name == val.name && nsset.equalTo(val.nsset);
+			return _name == val.name && _nsset.equalTo(val.nsset);
 		}
 		
 		public function get kind():uint { return AbcInfo.CONSTANT_Multiname; }
@@ -38,6 +38,13 @@
 		public function set name(value:String):void 
 		{
 			_name = value;
+		}
+		
+		public function get nsset():AvmNamespaceSet { return _nsset; }
+		
+		public function set nsset(value:AvmNamespaceSet):void 
+		{
+			_nsset = value;
 		}
 	}
 }

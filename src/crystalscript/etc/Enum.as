@@ -5,8 +5,7 @@ package crystalscript.etc
 	import flash.utils.describeType;
 	
 	/**
-	 * @author  Scott Bilas (http://scottbilas.com/2008/06/01/faking-enums-in-as3/)
-	 * @param	inType
+	 * @author  Scott Bilas (http://scottbilas.com/2008/06/01/faking-enums-in-as3/
 	 */
 	public class Enum 
 	{

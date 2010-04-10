@@ -16,9 +16,9 @@
 		
 		/**
 		 * NOTE: next() etiquette! Always leave the current token on the
-		 *       FIRST token of the grammar rule of the function you are
-		 *       recursing to. Always leave the current token on AFTER
-		 *       your grammar rule's last token when returning from a
+		 *       FIRST token of the grammar rule function you are
+		 *       recursing to. Always leave the current token on the token
+		 *       AFTER your grammar rule's last token when returning from a
 		 *       function.
 		 */
 		

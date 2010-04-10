@@ -7,8 +7,6 @@
 	
 	public class Util {
 		
-		
-		
 		public static function getClassName(o:Object):String
 		{
 			var fullClassName:String = getQualifiedClassName(o);
@@ -17,7 +15,6 @@
 			
 			return fullClassName.slice(fullClassName.lastIndexOf("::") + 1);
 		}
-		
 		
 		public static function hashNumber(num:*):uint 
 		{
@@ -48,7 +45,6 @@
 			if (!test)
 				throw new Error("Assertion failed: " + extra);
 		}
-		
 		
 		/**
 		 * @author  creynders (http://www.actionscript.org/forums/showthread.php3?t=158117)

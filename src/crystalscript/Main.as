@@ -31,29 +31,42 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			
+			/*
 			var cp:AbcConstantPool = new AbcConstantPool();
 			
 			var ns:AvmNamespace = new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "poop");
-			var x:AvmQName = new AvmQName("test", ns);
-			cp.multiname(x);
+			var name:AvmQName = new AvmQName("test", ns);
 			
+			var name2:AvmRTQName = new AvmRTQName("foo");
 			
+			var nsset:AvmNamespaceSet = new AvmNamespaceSet();
+			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "poop"));
+			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "beef"));
+			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "Sprite"));
+			var mn:AvmMultiname = new AvmMultiname("MyMultiname", nsset);
+
+			cp.int32(0xBEEF);
+			cp.float64(69.42);
+			cp.uint32(0xDEAD);
+			cp.utf8("TEST UTF8 WOO!");
+			cp.multiname(name2);		
+			cp.multiname(name);
+			cp.multiname(mn);
 			
-			var bs:AbcByteStream = new AbcByteStream();
-			cp.serialize(bs);
-			trace(cp.utf8("poop"));
+			var file:AbcFile = new AbcFile();
+			file.constantPool = cp;
 			
-			trace(bs.hexDump());
+			trace(file.serialize().hexDump());
+			*/
 			
-			
-			/*
 			var source:String = "loop\na = random()\nif a == 5\na = b + 6\nend\nend";
 			var parse:Parser = new Parser(source);
-			parse.parse();
+			
+			var tok:Tokenizer = new Tokenizer(source);
+			for each(var t:Token in tok.scan())
+				trace(t.type + " - " + t.value);
 			
 			trace(parse.tree.toString());
-			*/
 		}
 	}
 }

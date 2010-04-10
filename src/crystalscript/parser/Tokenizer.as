@@ -12,7 +12,6 @@
 	{
 		
 		private var _tokenRegex:Array = [
-		
 			// letter or underscore followed by zero or more alphanumeric/underscore
 			[TokenType.IDENTIFIER, /[a-zA-Z_]\w*/],
 			// floats with exponent support etc.
@@ -33,7 +32,6 @@
 			[TokenType.LESSEQUAL, /<=/],
 			[TokenType.GREATEREQUAL, />=/],
 			[TokenType.NOTEQUAL, /!=/]
-			
 		];
 		
 		private var _finalRegex:RegExp;
@@ -48,10 +46,10 @@
 		
 		public function Tokenizer(source:String = "") 
 		{
-			_source     = source;
-			_position   = 0;
-			_line       = 1;
-			_token      = new Token(TokenType.NONE, "<NONE>");
+			_source    = source;
+			_position  = 0;
+			_line      = 1;
+			_token     = new Token(TokenType.NONE, "<NONE>");
 			_nextToken = new Token(TokenType.NONE, "<NONE>");
 			buildRegex();
 		}
@@ -82,8 +80,8 @@
 			if (_source.length < 1) return tokens;
 			_position = 0;
 			
-			while (true) {
-					
+			while (true)
+			{		
 				next();
 				tokens.push(_token);
 				
