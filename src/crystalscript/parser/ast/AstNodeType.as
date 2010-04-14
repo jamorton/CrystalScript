@@ -9,9 +9,9 @@
 	public class AstNodeType extends Enum
 	{
 
-	{
-		initEnum(AstNodeType);
-	}
+		{
+			initEnum(AstNodeType);
+		}
 	
 	
 	public static const NONE              : AstNodeType = new AstNodeType();
@@ -43,9 +43,6 @@
 	public static const NUMBER_LITERAL    : AstNodeType = new AstNodeType();
 	public static const BREAK             : AstNodeType = new AstNodeType();
 	public static const CONTINUE          : AstNodeType = new AstNodeType();
-	
-
-	
 	
 	
 	/**

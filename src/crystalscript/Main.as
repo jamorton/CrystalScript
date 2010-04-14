@@ -59,14 +59,24 @@
 			trace(file.serialize().hexDump());
 			*/
 			
-			var source:String = "loop\na = random()\nif a == 5\na = b + 6\nend\nend";
-			var parse:Parser = new Parser(source);
+			//var source:String = "loop a = random() if a == 5 and (b + 6) < 5 a = b + 6 end end";
 			
-			var tok:Tokenizer = new Tokenizer(source);
-			for each(var t:Token in tok.scan())
-				trace(t.type + " - " + t.value);
+			var tok:Tokenizer = new Tokenizer();
+			tok.source = "loop a = 5 end";
+			trace(tok.scan());
+			
+			var parser:Parser = new Parser("a = random() while a < 5 a = 5 end");
+			parser.parse().toString();
+			
+			
+			/*
+			
+			var source:String = "loop \n  a = random() \n  if a == 5 and b == 6 \n  a = b + 6 \n  end \n  end";
+			var parse:Parser = new Parser(source);
+			parse.parse();
 			
 			trace(parse.tree.toString());
+			*/
 		}
 	}
 }

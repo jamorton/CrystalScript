@@ -124,6 +124,7 @@
 			
 			type = reservedWords(result[0], type);
 			var token:Token = new Token(type, result[0]);
+			token.line = _line;
 			
 			_token = _nextToken;
 			_nextToken = token;

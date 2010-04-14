@@ -23,7 +23,7 @@ and Lua. What follows is a list of the guidelines that are used when
 designing and implementing CrystalScript features. This list was inspired
 by the Zen of Python (Pep 20)
 
-Prefer:
+Specifically Prefer:
 
 	- Explicitness
 	- Simplicity
@@ -31,7 +31,7 @@ Prefer:
 	- Intuitiveness
 	- Speed
 	
-Avoid:
+Specifically Avoid:
 	
 	- "Magic" or Implicitness
 	- Ambiguity

@@ -57,7 +57,7 @@
 		private function statement(ctx:BranchNode):Boolean
 		{
 			// all statements begin with an identifier (not on purpose though)
-			_tok.expect(TokenType.IDENTIFIER);
+			//_tok.expect(TokenType.IDENTIFIER);
 			switch (_tok.token.type) 
 			{
 				case TokenType.IF:
@@ -204,6 +204,7 @@
 		
 		private function expression(ctx:BranchNode):void 
 		{
+			
 			ctx.children.push(orExpression());
 		}
 		
@@ -226,6 +227,7 @@
 			var ret:AstNode = compareExpression();
 			if (_tok.token.type == TokenType.AND) 
 			{
+				trace("hi");
 				var bn:BranchNode = new BranchNode(AstNodeType.EXPR_AND);				
 				_tok.next(); // SKIP 'and'
 				bn.children.push(ret);
@@ -264,7 +266,6 @@
 			}
 			
 			_tok.next(); // SKIP operator
-			trace(_tok.token.value);
 			bn.children.push(ret);
 			bn.children.push(orExpression());
 			return bn;
@@ -275,9 +276,9 @@
 			var ret:AstNode = mulExpression();
 			var bn:BranchNode;
 			if (_tok.token.type == TokenType.PLUS)
-				bn = new BranchNode(AstNodeType.ADD_ADD);
+				bn = new BranchNode(AstNodeType.EXPR_ADD, AstNodeType.ADD_ADD);
 			else if (_tok.token.type == TokenType.MINUS)
-				bn = new BranchNode(AstNodeType.ADD_SUBTRACT);
+				bn = new BranchNode(AstNodeType.EXPR_ADD, AstNodeType.ADD_SUBTRACT);
 			else
 				return ret;
 			
@@ -292,9 +293,9 @@
 			var ret:AstNode = unaryExpression();
 			var bn:BranchNode;
 			if (_tok.token.type == TokenType.STAR)
-				bn = new BranchNode(AstNodeType.MUL_MULTIPLTY);
+				bn = new BranchNode(AstNodeType.EXPR_MUL, AstNodeType.MUL_MULTIPLTY);
 			else if (_tok.token.type == TokenType.SLASH)
-				bn = new BranchNode(AstNodeType.MUL_DIVIDE);
+				bn = new BranchNode(AstNodeType.EXPR_MUL, AstNodeType.MUL_DIVIDE);
 			else
 				return ret;
 				
@@ -315,7 +316,7 @@
 				return atomExpression();
 			
 			_tok.next(); // SKIP '-' or 'not'
-			bn.children.push(orExpression());
+			bn.children.push(atomExpression());
 			return bn;
 		}
 
@@ -326,7 +327,7 @@
 			// TODO: Clean this up.
 			
 			// identifer is either a function call or a variable.
-			if (_tok.token.type ==  TokenType.IDENTIFIER) 
+			if (_tok.token.type ==  TokenType.IDENTIFIER)
 			{
 				var t:Token = _tok.peek();
 				// function call
