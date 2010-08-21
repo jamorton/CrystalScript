@@ -32,15 +32,16 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			/*
+			// test avm2
 			var cp:AbcConstantPool = new AbcConstantPool();
 			
-			var ns:AvmNamespace = new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "poop");
+			var ns:AvmNamespace = new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "beep");
 			var name:AvmQName = new AvmQName("test", ns);
 			
 			var name2:AvmRTQName = new AvmRTQName("foo");
 			
 			var nsset:AvmNamespaceSet = new AvmNamespaceSet();
-			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "poop"));
+			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "barbaz"));
 			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "beef"));
 			nsset.add(new AvmNamespace(AbcInfo.CONSTANT_PackageNamespace, "Sprite"));
 			var mn:AvmMultiname = new AvmMultiname("MyMultiname", nsset);
@@ -59,24 +60,10 @@
 			trace(file.serialize().hexDump());
 			*/
 			
-			//var source:String = "loop a = random() if a == 5 and (b + 6) < 5 a = b + 6 end end";
-			
-			var tok:Tokenizer = new Tokenizer();
-			tok.source = "loop a = 5 end";
-			trace(tok.scan());
-			
-			var parser:Parser = new Parser("a = random() while a < 5 a = 5 end");
-			parser.parse().toString();
-			
-			
-			/*
-			
-			var source:String = "loop \n  a = random() \n  if a == 5 and b == 6 \n  a = b + 6 \n  end \n  end";
-			var parse:Parser = new Parser(source);
-			parse.parse();
-			
-			trace(parse.tree.toString());
-			*/
+			// test parser
+			var parser:Parser = new Parser("while a and (b > (b + c + d)) and f call() if a > 6 call2() end end");
+			parser.parse();
+			trace(parser.tree.toString());
 		}
 	}
 }

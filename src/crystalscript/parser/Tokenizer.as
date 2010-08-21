@@ -69,7 +69,6 @@
 			}
 			
 			reg += ")";
-			trace(reg);
 			
 			_finalRegex = new RegExp(reg, "");
 		}
@@ -102,10 +101,18 @@
 			}
 			
 			// end of script
-			if (_position >= _source.length) 
+			if (_position > _source.length) 
 			{
+				trace("yes");
 				_nextToken = new Token(TokenType.NONE, "<NONE>");
 				_token = new Token(TokenType.EOF, "<EOF>");
+				return;
+			}
+			
+			if (_position == source.length)
+			{
+				_token = _nextToken;
+				_nextToken = new Token(TokenType.EOF, "<EOF>");
 				return;
 			}
 
@@ -147,6 +154,7 @@
 				case "end":      return TokenType.END;
 				case "break":    return TokenType.BREAK;
 				case "continue": return TokenType.CONTINUE;
+				case "and":      return TokenType.AND;
 				case "return":   return TokenType.RETURN;
 				default:         return type;
 			}
