@@ -1,11 +1,9 @@
 ﻿
-
 CrystalScript is inspired by:
 
 	- Python programming language [Syntax, grammar/parser methods, language methodology] (http://www.python.org)
 	- Lua programming language [Syntax, implementation, code] (http://lua.org)
 	- ECMAScript [Syntax]
-	
 	
 THANKS to:
 
