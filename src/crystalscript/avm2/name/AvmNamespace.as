@@ -12,13 +12,13 @@
 	public class AvmNamespace implements IHashable
 	{
 		
-		public var kind:uint;
-		public var name:String;
+		private var _kind:uint;
+		private var _name:String;
 		
-		public function AvmNamespace(kind_:uint, name_:String = "*") 
+		public function AvmNamespace(kind:uint, name:String = "*") 
 		{
-			kind = kind_;
-			name = name_;
+			_kind = kind;
+			_name = name;
 		}
 		
 		public function hash():uint 
@@ -29,6 +29,20 @@
 		public function equalTo(val:*):Boolean 
 		{
 			return val.kind == kind && val.name == name;
+		}
+		
+		public function get name():String { return _name; }
+		
+		public function set name(value:String):void 
+		{
+			_name = value;
+		}
+		
+		public function get kind():uint { return _kind; }
+		
+		public function set kind(value:uint):void 
+		{
+			_kind = value;
 		}
 		
 	}

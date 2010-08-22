@@ -54,7 +54,7 @@
 			log_track("block");
 			//var bn:BranchNode = new BranchNode(AstNodeType.BLOCK)
 			//ctx.children.push(bn);
-			while (statement(ctx));
+			while (statement(ctx)) {}
 		}
 		
 		/**
@@ -149,11 +149,8 @@
 			ctx.children.push(bn);
 			bn.children.push(new LeafNode(_tok.token.value, AstNodeType.IDENTIFIER));
 			
-			trace(_tok.token.value);
 			_tok.next(); // SKIP identifier
-			trace(_tok.token.value);
 			_tok.next(); // SKIP '('
-			trace(_tok.token.value);
 			
 			while (_tok.token.type != TokenType.RPAREN) 
 			{

@@ -12,12 +12,12 @@
 	{
 		
 		private var _name:String;
-		public var ns:AvmNamespace;
+		private var _ns:AvmNamespace;
 		
-		public function AvmQName(name:String, ns_:AvmNamespace) 
+		public function AvmQName(name:String = "void", ns:AvmNamespace)
 		{
 			_name  = name;
-			ns = ns_;
+			_ns = ns;
 		}
 		
 		public function hash():uint
@@ -39,6 +39,13 @@
 		public function set name(value:String):void 
 		{
 			_name = value;
+		}
+		
+		public function get ns():AvmNamespace { return _ns; }
+		
+		public function set ns(value:AvmNamespace):void 
+		{
+			_ns = value;
 		}
 	}
 	

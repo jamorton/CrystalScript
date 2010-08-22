@@ -33,7 +33,7 @@
 		public static const CONSTANT_RTQNameA:uint            = 0x10;
 		public static const CONSTANT_RTQNameL:uint            = 0x11;
 		public static const CONSTANT_RTQNameLA:uint           = 0x12;
-		public static const CONSTANT_NamespaceSet:uint       = 0x15;
+		public static const CONSTANT_NamespaceSet:uint        = 0x15;
 		public static const CONSTANT_PackageNamespace:uint    = 0x16;
 		public static const CONSTANT_PackageInternalNs:uint   = 0x17;
 		public static const CONSTANT_ProtectedNamespace:uint  = 0x18;
