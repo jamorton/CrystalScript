@@ -6,7 +6,7 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmRTQNameL implements IMultiname, IHashable
+	public class AvmRTQNameL implements IMultiname
 	{
 		
 		public function AvmRTQNameL()

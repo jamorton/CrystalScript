@@ -8,16 +8,16 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmQName implements IMultiname, IHashable
+	public class AvmQName implements IMultiname
 	{
 		
 		private var _name:String;
 		private var _ns:AvmNamespace;
 		
-		public function AvmQName(name:String = "void", ns:AvmNamespace)
+		public function AvmQName(name:String, ns:AvmNamespace)
 		{
-			_name  = name;
-			_ns = ns;
+			_name = name;
+			_ns   = ns;
 		}
 		
 		public function hash():uint

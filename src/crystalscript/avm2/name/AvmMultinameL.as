@@ -7,7 +7,7 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmMultinameL implements IMultiname, IHashable
+	public class AvmMultinameL implements IMultiname
 	{
 		private var _nsset:AvmNamespaceSet;
 		

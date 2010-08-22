@@ -9,13 +9,13 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmNamespace implements IHashable
+	public class AvmNamespace implements IName
 	{
 		
 		private var _kind:uint;
 		private var _name:String;
 		
-		public function AvmNamespace(kind:uint, name:String = "*") 
+		public function AvmNamespace(name:String = "*", kind:uint = AbcInfo.CONSTANT_PackageNamespace) 
 		{
 			_kind = kind;
 			_name = name;

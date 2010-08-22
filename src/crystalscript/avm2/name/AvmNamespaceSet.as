@@ -7,7 +7,7 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmNamespaceSet
+	public class AvmNamespaceSet implements IName
 	{
 		
 		private var _namespaces:Vector.<AvmNamespace>;

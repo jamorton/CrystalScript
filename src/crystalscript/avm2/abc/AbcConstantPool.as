@@ -3,13 +3,14 @@
 	import crystalscript.avm2.name.AvmMultiname;
 	import crystalscript.avm2.name.AvmNamespace;
 	import crystalscript.avm2.name.AvmNamespaceSet;
+	import crystalscript.avm2.name.AvmQName;
 	import crystalscript.avm2.name.IMultiname;
+	import crystalscript.avm2.name.Names;
 	import crystalscript.etc.HashTable;
 	import crystalscript.etc.Util;
 		
 	/**
 	 * @see AbcConstantPool in ESC sources
-	 * @author Jon Morton
 	 */
 	public class AbcConstantPool implements IAbcEntry
 	{
@@ -28,6 +29,8 @@
 		private var _namespaceIdx:Vector.<AvmNamespace>;
 		private var _nssetIdx:Vector.<AvmNamespaceSet>;
 		private var _multinameIdx:Vector.<IMultiname>;
+		
+		private const MULTINAME_DEFAULT = Names.any();
 		
 		public function AbcConstantPool()
 		{
@@ -124,9 +127,8 @@
 		
 		public function namespaceset(val:AvmNamespaceSet):uint 
 		{
-			if (!val || val.length < 1) return 0;
 			var index:uint = _nssetMap.read(val);
-			if (index == 0) 
+			if (index == 0)
 			{
 				index = _nssetIdx.length + 1;
 				_nssetMap.write(val, index);
@@ -137,9 +139,8 @@
 		
 		public function namespace_(val:AvmNamespace):uint
 		{
-			if (val.name == "*" || !val) return 0;
 			var index:uint = _namespaceMap.read(val);
-			if (index == 0) 
+			if (index == 0)
 			{
 				index = _namespaceIdx.length + 1;
 				_namespaceMap.write(val, index);
@@ -150,9 +151,9 @@
 		
 		public function multiname(val:IMultiname):uint
 		{
-			if (val.name == "*" || !val) return 0;
+			if (val.equalTo(MULTINAME_DEFAULT)) return 0;
 			var index:uint = _multinameMap.read(val);
-			if (index == 0) 
+			if (index == 0)
 			{
 				index = _multinameIdx.length + 1;
 				_multinameMap.write(val, index);

@@ -8,7 +8,7 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmRTQName implements IMultiname, IHashable
+	public class AvmRTQName implements IMultiname
 	{
 		private var _name:String;
 		

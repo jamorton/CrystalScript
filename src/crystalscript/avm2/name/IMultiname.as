@@ -1,14 +1,9 @@
 ﻿package crystalscript.avm2.name 
 {
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
-	public interface IMultiname 
+
+	public interface IMultiname extends IName
 	{
 		function get kind():uint;
-		function get name():String;
 	}
 	
 }

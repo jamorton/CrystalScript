@@ -9,7 +9,7 @@
 	 * ...
 	 * @author Jon Morton
 	 */
-	public class AvmMultiname implements IMultiname, IHashable
+	public class AvmMultiname implements IMultiname
 	{
 		private var _name:String;
 		private var _nsset:AvmNamespaceSet;
