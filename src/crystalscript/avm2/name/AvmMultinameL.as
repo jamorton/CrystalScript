@@ -29,8 +29,6 @@
 			return _nsset.equalTo(val.nsset);
 		}
 		
-		public function get name():String { return "*";  }
-		
 		public function get nsset():AvmNamespaceSet { return _nsset; }
 		
 		public function set nsset(value:AvmNamespaceSet):void 

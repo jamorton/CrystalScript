@@ -24,8 +24,6 @@
 			return true;
 		}
 		
-		public function get name():String { return "*"; }
-		
 		public function get kind():uint { return AbcInfo.CONSTANT_RTQNameL; }
 	}
 }

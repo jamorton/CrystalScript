@@ -15,7 +15,7 @@
 		private var _kind:uint;
 		private var _name:String;
 		
-		public function AvmNamespace(name:String = "*", kind:uint = AbcInfo.CONSTANT_PackageNamespace) 
+		public function AvmNamespace(name:String = "", kind:uint = AbcInfo.CONSTANT_PackageNamespace) 
 		{
 			_kind = kind;
 			_name = name;

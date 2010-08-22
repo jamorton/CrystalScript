@@ -164,7 +164,6 @@
 		
 		public function serialize(bytes:AbcByteStream):void
 		{
-			
 			// Namespaces, multinames, etc have to be written first
 			// to make sure the indexes they reference exist (strings, etc)
 			
