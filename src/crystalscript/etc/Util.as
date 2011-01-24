@@ -10,9 +10,6 @@
 		public static function getClassName(o:Object):String
 		{
 			var fullClassName:String = getQualifiedClassName(o);
-			
-			var a:ByteArray = new ByteArray();
-			
 			return fullClassName.slice(fullClassName.lastIndexOf("::") + 1);
 		}
 		
@@ -23,13 +20,13 @@
 		
 		public static function mixHash(a:uint, b:uint):uint 
 		{
-			// Just the FNV hash expanded to two steps.
+			// The FNV hash expanded to two steps.
 			return (((36342608889142559 ^ a) * 16777619) ^ b);
 		}
 		
 		/**
 		 * @see http://www.cse.yorku.ca/~oz/hash.html
-		 * @author djb2 algorith, unknown
+		 * @author djb2 algorithm, unknown
 		 */
 		public static function hashString(val:String):uint 
 		{
@@ -48,10 +45,7 @@
 		
 		/**
 		 * @author  creynders (http://www.actionscript.org/forums/showthread.php3?t=158117)
-		 * @param	obj
-		 * @param	level
 		 */
-
 		public static function deepTrace(obj:*, level:int = 0):void
 		{
 			var clname:String = getClassName(obj);
