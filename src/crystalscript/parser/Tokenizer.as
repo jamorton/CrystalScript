@@ -3,11 +3,7 @@
 	
 	import crystalscript.etc.Util;
 	import crystalscript.parser.exception.UnexpectedTokenException;
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
+
 	public class Tokenizer
 	{
 		

@@ -3,11 +3,7 @@
 	import crystalscript.etc.IHashable;
 	import crystalscript.etc.Util;
 	import crystalscript.avm2.abc.AbcInfo;
-
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
+	
 	public class AvmRTQName implements IMultiname
 	{
 		private var _name:String;

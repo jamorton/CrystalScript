@@ -1,11 +1,7 @@
 ﻿package crystalscript.parser 
 {
 	import crystalscript.etc.Enum;
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
+
 	public class TokenType extends Enum
 	{
 

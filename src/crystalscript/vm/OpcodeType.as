@@ -1,11 +1,7 @@
 ﻿package crystalscript.vm
 {
 	import crystalscript.etc.Enum;
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
+
 	public class OpcodeType extends Enum
 	{
 

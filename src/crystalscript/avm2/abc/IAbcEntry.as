@@ -3,7 +3,6 @@
 	
 	/**
 	 * Interface for all Abc elements
-	 * @author Jon Morton
 	 */
 	public interface IAbcEntry 
 	{

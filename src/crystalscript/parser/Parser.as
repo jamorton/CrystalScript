@@ -6,13 +6,8 @@
 	import crystalscript.parser.ast.LeafNode;
 	import crystalscript.parser.exception.UnexpectedTokenException;
 	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class Parser 
 	{
-		
 		
 		/**
 		 * NOTE: next() etiquette! Always leave the current token on the

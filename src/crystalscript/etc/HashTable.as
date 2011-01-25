@@ -2,15 +2,8 @@
 {
 	import flash.events.KeyboardEvent;
 	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class HashTable 
 	{
-		
-		
-		
 		private var _hashFunc:Function;
 		private var _eqFunc:Function;
 		private var _default:*;

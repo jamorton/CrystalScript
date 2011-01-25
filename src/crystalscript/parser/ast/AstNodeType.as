@@ -4,7 +4,6 @@
 	
 	/**
 	 * @see doc/Grammar.txt
-	 * @author Jon Morton
 	 */
 	public class AstNodeType extends Enum
 	{

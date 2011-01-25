@@ -6,7 +6,7 @@
 	
 	/**
 	 * @see AbcByteStream in ESC sources (http://hg.mozilla.org/tamarin-redux/)
-	 * @author Jon Morton, Adobe
+	 * @author adapted from code by Adobe
 	 */
 	public class AbcByteStream 
 	{

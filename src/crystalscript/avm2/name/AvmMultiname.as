@@ -4,11 +4,6 @@
 	import crystalscript.etc.IHashable;
 	import crystalscript.etc.Util;
 
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class AvmMultiname implements IMultiname
 	{
 		private var _name:String;

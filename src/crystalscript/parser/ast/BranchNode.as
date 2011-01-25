@@ -1,10 +1,6 @@
 ﻿package crystalscript.parser.ast 
 {
-	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
+
 	public class BranchNode extends AstNode
 	{
 		

@@ -3,10 +3,6 @@
 	import crystalscript.etc.IHashable;
 	import crystalscript.avm2.abc.AbcInfo;
 
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class AvmMultinameL implements IMultiname
 	{
 		private var _nsset:AvmNamespaceSet;

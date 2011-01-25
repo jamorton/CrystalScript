@@ -3,10 +3,6 @@
 	import crystalscript.parser.Token;
 	import crystalscript.parser.TokenType;
 	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class UnexpectedTokenException extends Error
 	{
 		

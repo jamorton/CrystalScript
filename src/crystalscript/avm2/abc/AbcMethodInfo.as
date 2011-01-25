@@ -1,10 +1,6 @@
 ﻿package crystalscript.avm2.abc 
 {
 	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class AbcMethodInfo implements IAbcEntry
 	{
 		

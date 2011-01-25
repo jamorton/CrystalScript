@@ -3,7 +3,6 @@
 	
 	/**
 	 * Random information
-	 * @author Jon Morton
 	 */
 	public class AbcInfo 
 	{

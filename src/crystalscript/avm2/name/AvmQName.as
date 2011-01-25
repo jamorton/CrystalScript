@@ -4,10 +4,6 @@
 	import crystalscript.etc.Util;
 	import crystalscript.avm2.abc.AbcInfo;
 
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class AvmQName implements IMultiname
 	{
 		

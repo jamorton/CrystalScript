@@ -1,10 +1,6 @@
 ﻿package crystalscript.parser 
 {
 	
-	/**
-	 * ...
-	 * @author Jon Morton
-	 */
 	public class Token 
 	{
 		private var _value:String;
