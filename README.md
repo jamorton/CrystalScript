@@ -6,6 +6,11 @@ CrystalScript is project built around providing a simple scripting language for 
 is written in AS3, and is aimed at being easy to incorporate into other projects (games, IDEs, interactive
 apps, as a plugin system, etc).
 
+Authors
+-------
+Design and Code by Jon '[Jonanin](http://www.github.com/Jonanin/)' Morton.
+Tons of help, inspiration, and guidance by Jasper '[magcius](http://www.github.com/magcius/)' St. Pierre of Mecheye Independent Studios.
+
 Project Overview
 ----------------
 
@@ -39,8 +44,7 @@ that will make it easier to write CrystalScript code.
 ### Standard Library ###
 
 It is a major goal to provide a feature-rich, easy to use standard library that contains all of the functions and
-other functionality expected in a modern scripting language. The python programming language is the main influence
-for this.
+other functionality expected in a modern scripting language.
 
 Project Status
 --------------
