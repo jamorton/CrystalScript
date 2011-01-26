@@ -3,7 +3,7 @@
 	import crystalscript.avm2.name.IMultiname;
 	import crystalscript.avm2.name.Names;
 	
-	public class AbcMethodInfo implements IAbcEntry
+	public class AbcMethodInfo extends EntryFlags implements IAbcEntry
 	{
 	
 		//MethodInfo flags, see AVM2 overview, section 4.5
@@ -18,15 +18,15 @@
 		private var _params:Vector.<IMultiname>;
 		private var _optionals:Vector.<Array>;
 		private var _name:String;
-		private var _flags:uint;
+		
 		
 		public function AbcMethodInfo()
 		{
 			_returnType = Names.any();
 			_params = new Vector.<IMultiname>();
 			_optionals = new Vector.<Array>();
-			_flags = 0;
 			_name  = "";
+			flags  = 0;
 		}
 		
 		public function serialize(abc:AbcFile):AbcByteStream 
@@ -37,7 +37,7 @@
 			for each (var param:IMultiname in _params)
 				bytes.uint30(abc.constantPool.multiname(param));
 			bytes.uint30(abc.constantPool.utf8(_name));
-			bytes.uint8(_flags);
+			bytes.uint8(flags);
 			/*
 			 * TODO
 			 * 
@@ -59,17 +59,6 @@
 				setFlagBit(HAS_OPTIONAL, true);
 			// this could be done better.
 			_optionals.push([kind, val]);
-		}
-		
-		private function getFlagBit(bit:uint):Boolean
-		{
-			return Boolean(_flags & bit);
-		}
-		
-		private function setFlagBit(bit:uint, val:Boolean):void
-		{
-			if (val) _flags |=  bit;
-			else     _flags &= ~bit;
 		}
 		
 		public function get needArguments():Boolean { return getFlagBit(NEED_ARGUMENTS); };
