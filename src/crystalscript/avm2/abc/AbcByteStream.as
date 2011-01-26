@@ -78,9 +78,9 @@
 			_bytes.writeUTFBytes(m);
 		}
 		
-		public function addBytes(m:AbcByteStream):void 
+		public function addBytes(other:AbcByteStream):void
 		{
-			_bytes.writeBytes(m.bytes);
+			_bytes.writeBytes(other.bytes);
 		}
 		
 		/**
@@ -129,7 +129,7 @@
 		{
 			var table:Array = [
 				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"
-			]
+			];
 			var oldpos:int = _bytes.position;
 			var output:String = "";
 			_bytes.position = 0;
