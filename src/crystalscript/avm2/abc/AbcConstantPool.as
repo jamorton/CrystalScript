@@ -162,10 +162,12 @@
 			return index;
 		}
 		
-		public function serialize(bytes:AbcByteStream):void
+		public function serialize(abc:AbcFile):void
 		{
-			// Namespaces, multinames, etc have to be written first
-			// to make sure the indexes they reference exist (strings, etc)
+			var bytes:AbcByteStream = new AbcByteStream();
+			
+			// Multinames, namespaces, and nssets have to be written first
+			// to make sure the indexes (primitive types) they reference exist.
 			
 			/***** MULTINAMES ****/
 			var multiname_tmp:AbcByteStream = new AbcByteStream();
@@ -206,18 +208,22 @@
 				ns_tmp.uint30(utf8(ns.name));
 			}
 			
+			/***** INTS ****/
 			bytes.uint30(_intIdx.length + 1);
 			for each(var i:int in _intIdx)
 				bytes.int32(i);
-				
+			
+			/***** UINTS ****/
 			bytes.uint30(_uintIdx.length + 1);
 			for each(var u:uint in _uintIdx)
 				bytes.uint32(u);
 			
+			/***** DOUBLES ****/
 			bytes.uint30(_doubleIdx.length + 1);
 			for each(var d:Number in _doubleIdx)
 				bytes.float64(d);
 			
+			/***** STRINGS ****/
 			bytes.uint30(_stringIdx.length + 1);
 			for each(var s:String in _stringIdx)
 			{
@@ -234,6 +240,7 @@
 			bytes.uint30(_multinameIdx.length + 1);
 			bytes.addBytes(multiname_tmp);
 			
+			return bytes;
 		}
 	}
 }

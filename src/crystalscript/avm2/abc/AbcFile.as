@@ -1,10 +1,7 @@
 ﻿package crystalscript.avm2.abc
 {
 	import crystalscript.etc.Util;
-	
-	/**
-	 * note: Doesn't really represent a file, per-se, but it's close enough.
-	 */
+
 	public class AbcFile 
 	{
 		
@@ -12,17 +9,17 @@
 		
 		public function AbcFile() 
 		{
+			_constantPool = new AbcConstantPool();
 		}
 		
 		public function serialize():AbcByteStream
 		{
-			Util.assert(_constantPool != null, "Constant pool not set");
-			
+			// we serialize everything topologically so that the entries that depend
+			// on other entries can add their children to the AbcFile first
+			// (e.g., almost all entries reference the constant pool, that is serialized last.
 			var bytes:AbcByteStream = new AbcByteStream();
 			bytes.uint16(AbcInfo.MINOR_VERSION);
 			bytes.uint16(AbcInfo.MAJOR_VERSION);
-			
-			_constantPool.serialize(bytes);
 			
 			bytes.uint30(0);
 			bytes.uint30(0);

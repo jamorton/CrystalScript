@@ -6,7 +6,7 @@
 	 */
 	public interface IAbcEntry 
 	{
-		function serialize(bytes:AbcByteStream):void;	
+		function serialize(abc:AbcFile):AbcByteStream;
 	}
 	
 }
