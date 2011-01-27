@@ -30,7 +30,7 @@
 		private var _nssetIdx:Vector.<AvmNamespaceSet>;
 		private var _multinameIdx:Vector.<IMultiname>;
 		
-		private const MULTINAME_DEFAULT = Names.any();
+		private const MULTINAME_DEFAULT:IMultiname = Names.any();
 		
 		public function AbcConstantPool()
 		{
@@ -115,7 +115,7 @@
 		{
 			var limit:uint = s.length;
 			
-			for (var i:uint = 0; i < limit && s.charCodeAt(i) < 128 ; i++);
+			for (var i:uint = 0; i < limit && s.charCodeAt(i) < 128 ; i++) {}
 			
 			if (i == limit)
 				return limit;
@@ -162,7 +162,7 @@
 			return index;
 		}
 		
-		public function serialize(abc:AbcFile):void
+		public function serialize(abc:AbcFile):AbcByteStream
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
 			

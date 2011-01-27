@@ -51,7 +51,7 @@
 			var clname:String = getClassName(obj);
 					
 			var tabs:String = "";
-			for ( var i:int = 0; i < level ; i++, tabs += "\t" );
+			for ( var i:int = 0; i < level ; i++, tabs += "\t" ) {};
 			
 			if (clname == "Array") {
 				trace(tabs + clname);

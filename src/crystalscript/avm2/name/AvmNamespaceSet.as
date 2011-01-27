@@ -24,8 +24,9 @@
 			return hash;
 		}
 		
-		public function equalTo(val:AvmNamespaceSet):Boolean 
+		public function equalTo(val:*):Boolean 
 		{
+			if (!(val is AvmNamespaceSet)) return false;
 			if (length != val.length) return false;
 			for (var i:uint = 0, k:uint = length; i < k; i++) 
 			{
