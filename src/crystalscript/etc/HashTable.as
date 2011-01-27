@@ -1,6 +1,5 @@
 ﻿package crystalscript.etc 
 {
-	import flash.events.KeyboardEvent;
 	
 	public class HashTable 
 	{
@@ -8,18 +7,29 @@
 		private var _eqFunc:Function;
 		private var _default:*;
 		
-		private var _table:Array;
+		private var _table:Vector.<HashEntry>;
 		private var _length:uint;
 		private var _size:uint;
 		
 		private var _divisor:uint;
 		
+		/**
+		 * Constructs a new hash table. Functions that hash values to be put into the
+		 * table and test for equality between them may be specified. If they are not, it is
+		 * expected that all elements put in the table implement IHashable.
+		 * 
+		 * @param	hashfunc a function which takes an item to be put into the table anre
+		 *                   returns a uint hash value
+		 * @param	eqfunc   a function which takes two arguments and returns true if they
+		 *                   are equal, or false otherwise
+		 * @param	def      a default value to return if an item is not found.
+		 */
 		public function HashTable(hashfunc:Function = null, eqfunc:Function = null, def:* = null) 
 		{
 			_default  = def;
 			_hashFunc = hashfunc;
 			_eqFunc   = eqfunc;
-			_size = 32;
+			_size = 2;
 			_length = 0;
 			_divisor = _size - 1;
 			_table = makeTable();
@@ -27,28 +37,45 @@
 		
 		public function read(key:*):*
 		{
-			var list:Array = _table[hash(key) & _divisor];
-			var k:uint = list.length;
-			for (var i:uint = 0; i < k; i++) 
+			var c:uint = hash(key) & _divisor;
+			var entry:HashEntry = _table[c];
+			while (entry)
 			{
-				var entry:HashEntry = list[i];
 				if (eq(key, entry.key))
 					return entry.value;
+				entry = entry.next;
 			}
 			return _default;
 		}
 		
 		public function write(key:*, val:*):void
 		{
-			var entry:HashEntry = new HashEntry();
-			var h:uint = hash(key);
-			entry.key = key;
-			entry.value = val;
-			entry.hash = h;
-			_table[h & _divisor].push(entry);
-			_length++;
 			if (_length >= _size)
 				rehash();
+			var h:uint = hash(key);
+			var c:uint = h & _divisor;
+			var entry:HashEntry = new HashEntry(key, h, val);
+			insert(entry, c);
+			_length++;
+			
+		}
+		
+		private function insert(newEntry:HashEntry, h:uint):void
+		{
+			if (_table[h] == null)
+			{
+				_table[h] = newEntry;
+				return;
+			}
+			var list:HashEntry = _table[h];
+			while (list)
+			{
+				if (eq(list.key, newEntry.key))
+					return;
+				list = list.next;
+			}
+			list.next = newEntry;
+			newEntry.prev = list;
 		}
 		
 		public function toArray():Array 
@@ -57,11 +84,11 @@
 			var arr:Array = new Array();
 			for (i = 0, k = _size; i < k; i++)
 			{
-				var list:Array = _table[i];
-				for (j = 0, l = list.length; j < l; j++) 
+				var list:HashEntry = _table[i];
+				while (list)
 				{
-					var entry:HashEntry = list[j];
-					arr.push({ "key": entry.key, "value": entry.value });
+					arr.push( { "key": list.key, "value": list.value, "hash": list.hash } );
+					list = list.next;
 				}
 			}
 			return arr;
@@ -80,32 +107,22 @@
 		}
 		
 		private function rehash():void 
-		{	
-			var oldsize:uint = _size;
-			_size <<= 1;
-			_divisor = _size - 1;
-			var newtable:Array = makeTable();
-			for (var i:uint = 0; i < oldsize; i++) 
+		{
+			var k:uint = _size;
+			_divisor = (_size <<= 1) - 1;
+			var newtable:Vector.<HashEntry> = makeTable();
+			for each(var i:uint = 0; i < k; i++) 
 			{
-				var list:Array = _table[i];
-				var k:uint = list.length;
-				for (var j:uint = 0; j < k; j++) 
-				{
-					var entry:HashEntry = list[j];
-					newtable[entry.hash & _divisor].push(entry);
-				}
+				var entry:HashEntry = _table[i];
+				if (entry != null)
+					newtable[entry.hash & _divisor] = entry;
 			}
-
 			_table = newtable;
 		}
 		
-		private function makeTable():Array 
+		private function makeTable():Vector.<HashEntry> 
 		{
-			var table:Array = new Array();
-			for (var i:uint = 0; i < _size; i++) {
-				table[i] = new Array();
-			}
-			return table;
+			return new Vector.<HashEntry>(_size);
 		}
 		
 		public function get length():uint { return _length; }
@@ -118,5 +135,18 @@ internal class HashEntry
 	public var key:*;
 	public var hash:uint;
 	public var value:*;
+	
+	public var next:HashEntry;
+	public var prev:HashEntry;
+	
+	function HashEntry(k:*, h:*, v:*, n:HashEntry = null, p:HashEntry = null)
+	{
+		key   = k;
+		hash  = h;
+		value = v;
+		next  = n;
+		prev  = p;
+	}
+	
 }
 
