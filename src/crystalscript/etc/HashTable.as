@@ -29,7 +29,7 @@
 			_default  = def;
 			_hashFunc = hashfunc;
 			_eqFunc   = eqfunc;
-			_size = 2;
+			_size = 32;
 			_length = 0;
 			_divisor = _size - 1;
 			_table = makeTable();
@@ -37,8 +37,7 @@
 		
 		public function read(key:*):*
 		{
-			var c:uint = hash(key) & _divisor;
-			var entry:HashEntry = _table[c];
+			var entry:HashEntry = _table[hash(key) & _divisor];
 			while (entry)
 			{
 				if (eq(key, entry.key))
@@ -53,9 +52,8 @@
 			if (_length >= _size)
 				rehash();
 			var h:uint = hash(key);
-			var c:uint = h & _divisor;
 			var entry:HashEntry = new HashEntry(key, h, val);
-			insert(entry, c);
+			insert(entry, h & _divisor);
 			_length++;
 			
 		}
