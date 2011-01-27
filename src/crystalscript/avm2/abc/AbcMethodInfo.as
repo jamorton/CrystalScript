@@ -61,6 +61,10 @@
 			_optionals.push([kind, val]);
 		}
 		
+		////////////////////////////////////////////////////////////////////////
+		// FLAGS PROPERTIES
+		////////////////////////////////////////////////////////////////////////
+		
 		public function get needArguments():Boolean { return getFlagBit(NEED_ARGUMENTS); };
 		public function set needArguments(value:Boolean):void
 		{
@@ -81,6 +85,8 @@
 		
 		public function get hasOptional():Boolean { return _optionals.length > 0 }
 		
+		////////////////////////////////////////////////////////////////////////
+		// ENTRY PROPERTIES
 		////////////////////////////////////////////////////////////////////////
 		
 		public function get returnType():IMultiname { return _returnType; }

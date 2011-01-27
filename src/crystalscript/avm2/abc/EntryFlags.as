@@ -14,12 +14,12 @@ package crystalscript.avm2.abc
 			throw new Error("EntryFlags is abstract and may not be instantiated directly");
 		}
 		
-		private function getFlagBit(bit:uint):Boolean
+		protected function getFlagBit(bit:uint):Boolean
 		{
 			return Boolean(_flags & bit);
 		}
 		
-		private function setFlagBit(bit:uint, val:Boolean):void
+		protected function setFlagBit(bit:uint, val:Boolean):void
 		{
 			if (val) _flags |=  bit;
 			else     _flags &= ~bit;

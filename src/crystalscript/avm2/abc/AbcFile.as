@@ -32,12 +32,6 @@
 		
 		public function get constantPool():AbcConstantPool { return _constantPool; }
 		
-		public function set constantPool(value:AbcConstantPool):void 
-		{
-			_constantPool = value;
-		}
-		
-		
 		
 	}
 	
