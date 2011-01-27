@@ -13,6 +13,9 @@ package crystalscript.avm2.abc
 		public function AbcMethodBody(method:AbcMethodInfo) 
 		{
 			_method = method;
+			_maxStack = 0;
+			_localCount = 0;
+			_maxScopeDepth = 0;
 			_code   = new AbcByteStream();
 		}
 		

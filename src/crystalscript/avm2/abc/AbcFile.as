@@ -6,6 +6,7 @@
 	{
 		
 		private var _constantPool:AbcConstantPool;
+		private var _
 		
 		public function AbcFile() 
 		{

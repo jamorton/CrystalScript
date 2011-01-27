@@ -3,7 +3,7 @@ package crystalscript.avm2.abc
 	import crystalscript.avm2.name.AvmQName;
 	import crystalscript.avm2.name.IMultiname;
 
-	public class AbcInstanceInfo extends EntryFlags implements IAbcEntry
+	public class AbcClass extends EntryFlags implements IAbcEntry
 	{
 		
 		// from Adobe AVM2 overview, section 4.7
@@ -12,13 +12,12 @@ package crystalscript.avm2.abc
 		private static const CONSTANT_ClassInterface:uint   = 0x04;
 		private static const CONSTANT_ClassProtectedNs:uint = 0x08;
 		
-		
 		private var _name:AvmQName;
 		private var _superName:IMultiname;
 		private var _protectedNs:IMultiname;
 		private var _interfaces:Vector.<IMultiname>;
 		
-		public function AbcInstanceInfo(name:AvmQName) 
+		public function AbcClass(name:AvmQName)
 		{
 			_name = name;
 			_superName = null;
