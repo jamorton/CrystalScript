@@ -1,12 +1,13 @@
 ﻿package crystalscript.avm2.abc
 {
-	import crystalscript.etc.Util;
+	import crystalscript.base.*;
 
 	public class AbcFile 
 	{
 		
 		private var _constantPool:AbcConstantPool;
-		private var _
+		private var _classes:HashTable;
+		private var _scripts:HashTable;
 		
 		public function AbcFile() 
 		{

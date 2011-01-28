@@ -1,6 +1,6 @@
 ﻿package crystalscript.avm2.name 
 {
-	import crystalscript.etc.Util;
+	import crystalscript.base.Util;
 	import crystalscript.avm2.abc.AbcInfo;
 
 	public class AvmNamespaceSet implements IName

@@ -1,7 +1,6 @@
 ﻿package crystalscript.avm2.name 
 {
-	import crystalscript.etc.IHashable;
-	import crystalscript.etc.Util;
+	import crystalscript.base.*;
 	import crystalscript.avm2.abc.AbcInfo;
 	
 	public class AvmRTQName implements IMultiname

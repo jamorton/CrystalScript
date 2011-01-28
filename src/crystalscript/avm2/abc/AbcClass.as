@@ -1,7 +1,6 @@
 package crystalscript.avm2.abc 
 {
-	import crystalscript.avm2.name.AvmQName;
-	import crystalscript.avm2.name.IMultiname;
+	import crystalscript.avm2.name.*;
 
 	public class AbcClass extends EntryFlags implements IAbcEntry
 	{

@@ -1,4 +1,4 @@
-﻿package crystalscript.etc 
+﻿package crystalscript.base
 {
 	
 	public interface IHashable 

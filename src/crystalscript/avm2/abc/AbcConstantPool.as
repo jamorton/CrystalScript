@@ -1,13 +1,7 @@
 ﻿package crystalscript.avm2.abc 
 {
-	import crystalscript.avm2.name.AvmMultiname;
-	import crystalscript.avm2.name.AvmNamespace;
-	import crystalscript.avm2.name.AvmNamespaceSet;
-	import crystalscript.avm2.name.AvmQName;
-	import crystalscript.avm2.name.IMultiname;
-	import crystalscript.avm2.name.Names;
-	import crystalscript.etc.HashTable;
-	import crystalscript.etc.Util;
+	import crystalscript.avm2.name.*;
+	import crystalscript.base.*;
 		
 	/**
 	 * @see AbcConstantPool in ESC sources
@@ -53,7 +47,7 @@
 			_stringIdx    = new Vector.<String>();
 			_namespaceIdx = new Vector.<AvmNamespace>();
 			_nssetIdx     = new Vector.<AvmNamespaceSet>();
-			_multinameIdx = new Vector.<IMultiname>(); 
+			_multinameIdx = new Vector.<IMultiname>();
 		}
 		
 		public function int32(val:int):uint 

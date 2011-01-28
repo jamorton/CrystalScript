@@ -1,6 +1,6 @@
 package crystalscript.avm2.name 
 {
-	import crystalscript.etc.IHashable;
+	import crystalscript.base.IHashable;
 	
 	public interface IName extends IHashable
 	{

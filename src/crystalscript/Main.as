@@ -7,7 +7,7 @@
 	
 	import crystalscript.avm2.abc.*;
 	import crystalscript.avm2.name.*;
-	import crystalscript.etc.*;
+	import crystalscript.base.*;
 	import crystalscript.parser.*;
 	
 	/**

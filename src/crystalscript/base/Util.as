@@ -1,11 +1,12 @@
-﻿package crystalscript.etc 
+﻿package crystalscript.base 
 {
 
 	import flash.accessibility.Accessibility;
 	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	
-	public class Util {
+	public class Util
+	{
 		
 		public static function getClassName(o:Object):String
 		{
@@ -18,10 +19,10 @@
 			return uint(num);
 		}
 		
-		public static function mixHash(a:uint, b:uint):uint 
+		public static function hashTwo(a:*, b:*):uint 
 		{
 			// The FNV hash expanded to two steps.
-			return (((36342608889142559 ^ a) * 16777619) ^ b);
+			return (((36342608889142559 ^ uint(a)) * 16777619) ^ uint(b));
 		}
 		
 		/**

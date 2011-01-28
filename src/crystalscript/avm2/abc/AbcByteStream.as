@@ -1,6 +1,6 @@
 ﻿package crystalscript.avm2.abc 
 {
-	import crystalscript.etc.Util;
+	import crystalscript.base.Util;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	

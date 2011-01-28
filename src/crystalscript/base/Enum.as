@@ -1,10 +1,11 @@
 ﻿
 
-package crystalscript.etc 
+package crystalscript.base 
 {
 	import flash.utils.describeType;
 	
 	/**
+	 * Simple enum system that supports integer ids and toString
 	 * @author  Scott Bilas (http://scottbilas.com/2008/06/01/faking-enums-in-as3/)
 	 */
 	public class Enum 

@@ -1,17 +1,17 @@
-﻿package crystalscript.etc 
+﻿package crystalscript.base 
 {
 	
 	public class HashTable 
 	{
+		
 		private var _hashFunc:Function;
 		private var _eqFunc:Function;
 		private var _default:*;
 		
 		private var _table:Vector.<HashEntry>;
-		private var _length:uint;
-		private var _size:uint;
+		private var _numItems:uint;
 		
-		private var _divisor:uint;
+		private static const MAX_LOAD_FACTOR:Number = 0.75;
 		
 		/**
 		 * Constructs a new hash table. Functions that hash values to be put into the
@@ -29,15 +29,13 @@
 			_default  = def;
 			_hashFunc = hashfunc;
 			_eqFunc   = eqfunc;
-			_size = 32;
-			_length = 0;
-			_divisor = _size - 1;
-			_table = makeTable();
+			_table    = new Vector.<HashEntry>(11);
+			_numItems = 0;
 		}
 		
 		public function read(key:*):*
 		{
-			var entry:HashEntry = _table[hash(key) & _divisor];
+			var entry:HashEntry = _table[hash(key) % _table.length];
 			while (entry)
 			{
 				if (eq(key, entry.key))
@@ -49,12 +47,12 @@
 		
 		public function write(key:*, val:*):void
 		{
-			if (_length >= _size)
-				rehash();
+			if (loadFactor >= MAX_LOAD_FACTOR)
+				resize();
 			var h:uint = hash(key);
 			var entry:HashEntry = new HashEntry(key, h, val);
-			insert(entry, h & _divisor);
-			_length++;
+			insert(entry, h % _table.length);
+			_numItems++;
 			
 		}
 		
@@ -73,23 +71,6 @@
 				list = list.next;
 			}
 			list.next = newEntry;
-			newEntry.prev = list;
-		}
-		
-		public function toArray():Array 
-		{
-			var i:uint, k:uint, j:uint, l:uint;
-			var arr:Array = new Array();
-			for (i = 0, k = _size; i < k; i++)
-			{
-				var list:HashEntry = _table[i];
-				while (list)
-				{
-					arr.push( { "key": list.key, "value": list.value, "hash": list.hash } );
-					list = list.next;
-				}
-			}
-			return arr;
 		}
 		
 		private function eq(elem1:*, elem2:*):Boolean
@@ -104,46 +85,57 @@
 			return _hashFunc(elem);
 		}
 		
-		private function rehash():void 
+		private function resize():void 
 		{
-			var k:uint = _size;
-			_divisor = (_size <<= 1) - 1;
-			var newtable:Vector.<HashEntry> = makeTable();
-			for each(var i:uint = 0; i < k; i++) 
+			var oldTable:Vector.<HashEntry> = _table;
+			_table = new Vector.<HashEntry>(_table.length * 2 + 1);
+			for(var i:uint = 0, k:uint = oldTable.length; i < k; i++) 
 			{
-				var entry:HashEntry = _table[i];
-				if (entry != null)
-					newtable[entry.hash & _divisor] = entry;
+				var entry:HashEntry = oldTable[i];
+				insert(entry, entry.hash % _table.length);
 			}
-			_table = newtable;
 		}
 		
-		private function makeTable():Vector.<HashEntry> 
+		public function toArray():Array 
 		{
-			return new Vector.<HashEntry>(_size);
+			var i:uint, k:uint, j:uint, l:uint;
+			var arr:Array = new Array();
+			for (i = 0, k = _table.length; i < k; i++)
+			{
+				var list:HashEntry = _table[i];
+				while (list)
+				{
+					arr.push( { "key": list.key, "value": list.value, "hash": list.hash } );
+					list = list.next;
+				}
+			}
+			return arr;
 		}
 		
-		public function get length():uint { return _length; }
+		public function get loadFactor():Number
+		{
+			return _numItems / _table.length;
+		}
+		
+		public function get size():uint { return _numItems; }
 	}
 	
 }
 
-internal class HashEntry 
+internal class HashEntry
 {
 	public var key:*;
 	public var hash:uint;
 	public var value:*;
 	
 	public var next:HashEntry;
-	public var prev:HashEntry;
 	
-	function HashEntry(k:*, h:*, v:*, n:HashEntry = null, p:HashEntry = null)
+	function HashEntry(k:*, h:*, v:*, n:HashEntry = null)
 	{
 		key   = k;
 		hash  = h;
 		value = v;
 		next  = n;
-		prev  = p;
 	}
 	
 }

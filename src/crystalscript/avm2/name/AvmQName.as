@@ -1,7 +1,6 @@
 ﻿package crystalscript.avm2.name 
 {
-	import crystalscript.etc.IHashable;
-	import crystalscript.etc.Util;
+	import crystalscript.base.*;
 	import crystalscript.avm2.abc.AbcInfo;
 
 	public class AvmQName implements IMultiname
@@ -18,8 +17,7 @@
 		
 		public function hash():uint
 		{
-			// Very arbitray.
-			return Util.mixHash(Util.hashString(_name), ns.hash());
+			return Util.hashTwo(Util.hashString(_name), ns.hash());
 		}
 		
 		public function equalTo(val:*):Boolean 

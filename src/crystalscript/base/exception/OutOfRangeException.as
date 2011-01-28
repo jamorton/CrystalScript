@@ -1,4 +1,4 @@
-﻿package crystalscript.etc.exception 
+﻿package crystalscript.base.exception 
 {
 	
 	public class OutOfRangeException extends Error
