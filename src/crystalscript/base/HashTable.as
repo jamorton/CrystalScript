@@ -6,7 +6,7 @@
 	 * extremely flexible.
 	 * 
 	 * Comparison to builtin solutions: AS3's Object does not work well with
-	 * non-primitive types as keys, and the Dictionary class is purel reference
+	 * non-primitive types as keys, and the Dictionary class is purely reference
 	 * based. This hash table allows for custom hash and equality functions,
 	 * which makes it much more flexible.
 	 * 
