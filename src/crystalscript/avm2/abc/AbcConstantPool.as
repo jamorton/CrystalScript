@@ -28,18 +28,13 @@
 		
 		public function AbcConstantPool()
 		{
-			function eqn(a:*, b:*):Boolean 
-			{
-				return a == b;
-			}
-			
-			_intMap       = new HashTable(Util.hashNumber, eqn, 0);
-			_uintMap      = new HashTable(Util.hashNumber, eqn, 0);
-			_doubleMap    = new HashTable(Util.hashNumber, eqn, 0);
-			_stringMap    = new HashTable(Util.hashString, eqn, 0);
-			_namespaceMap = new HashTable(null, null, 0);
-			_nssetMap     = new HashTable(null, null, 0);
-			_multinameMap = new HashTable(null, null, 0);
+			_intMap       = new HashTable(0);
+			_uintMap      = new HashTable(0);
+			_doubleMap    = new HashTable(0);
+			_stringMap    = new HashTable(0);
+			_namespaceMap = new HashTable(0);
+			_nssetMap     = new HashTable(0);
+			_multinameMap = new HashTable(0);
 			
 			_intIdx       = new Vector.<int>();
 			_uintIdx      = new Vector.<uint>();

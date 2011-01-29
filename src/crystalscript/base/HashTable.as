@@ -1,11 +1,20 @@
 ﻿package crystalscript.base 
 {
 	
+	/**
+	 * A simple, relatively efficient hash table implementation designed to be
+	 * extremely flexible.
+	 * 
+	 * Comparison to builtin solutions: AS3's Object does not work well with
+	 * non-primitive types as keys, and the Dictionary class is purel reference
+	 * based. This hash table allows for custom hash and equality functions,
+	 * which makes it much more flexible.
+	 * 
+	 * If a given key is a primitive type, it will be automatically hashed. If 
+	 * a key is an arbitrary object, it is expected to implement IHashable.
+	 */
 	public class HashTable 
 	{
-		
-		private var _hashFunc:Function;
-		private var _eqFunc:Function;
 		private var _default:*;
 		
 		private var _table:Vector.<HashEntry>;
@@ -13,22 +22,9 @@
 		
 		private static const MAX_LOAD_FACTOR:Number = 0.75;
 		
-		/**
-		 * Constructs a new hash table. Functions that hash values to be put into the
-		 * table and test for equality between them may be specified. If they are not, it is
-		 * expected that all elements put in the table implement IHashable.
-		 * 
-		 * @param	hashfunc a function which takes an item to be put into the table anre
-		 *                   returns a uint hash value
-		 * @param	eqfunc   a function which takes two arguments and returns true if they
-		 *                   are equal, or false otherwise
-		 * @param	def      a default value to return if an item is not found.
-		 */
-		public function HashTable(hashfunc:Function = null, eqfunc:Function = null, def:* = null) 
+		public function HashTable(def:* = null) 
 		{
 			_default  = def;
-			_hashFunc = hashfunc;
-			_eqFunc   = eqfunc;
 			_table    = new Vector.<HashEntry>(11);
 			_numItems = 0;
 		}
@@ -53,7 +49,6 @@
 			var entry:HashEntry = new HashEntry(key, h, val);
 			insert(entry, h % _table.length);
 			_numItems++;
-			
 		}
 		
 		private function insert(newEntry:HashEntry, h:uint):void
@@ -75,14 +70,14 @@
 		
 		private function eq(elem1:*, elem2:*):Boolean
 		{
-			if (_eqFunc == null) return elem1.equalTo(elem2);
-			return _eqFunc(elem1, elem2);
+			if (elem1 is IHashable) return elem1.equalTo(elem2);
+			return elem1 == elem2;
 		}
 		
 		private function hash(elem:*):uint 
 		{
-			if (_hashFunc == null) return elem.hash();
-			return _hashFunc(elem);
+			if (elem is IHashable) return elem.hash();
+			return Util.hash(elem);
 		}
 		
 		private function resize():void 
@@ -122,6 +117,13 @@
 	
 }
 
+/**
+ * An instance of this internal class is created for each
+ * entry into the table. It's main purpose is to keep
+ * track of a key's hash so that it does not need to be
+ * recalculated when the table is resized. It also functions
+ * as a linked list node for chaining.
+ */
 internal class HashEntry
 {
 	public var key:*;

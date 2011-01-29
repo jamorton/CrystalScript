@@ -14,12 +14,18 @@
 			return fullClassName.slice(fullClassName.lastIndexOf("::") + 1);
 		}
 		
-		public static function hashNumber(num:*):uint 
+		public static function hash(obj:*):uint
+		{
+			if (obj is uint || obj is int || obj is Number) return uint(obj);
+			return Util.hashString(obj.toString());
+		}
+		
+		public static function hashNumber(num:*):uint
 		{
 			return uint(num);
 		}
 		
-		public static function hashTwo(a:*, b:*):uint 
+		public static function hashTwo(a:*, b:*):uint
 		{
 			// The FNV hash expanded to two steps.
 			return (((36342608889142559 ^ uint(a)) * 16777619) ^ uint(b));
@@ -27,18 +33,18 @@
 		
 		/**
 		 * @see http://www.cse.yorku.ca/~oz/hash.html
-		 * @author djb2 algorithm, unknown
+		 * @author sdbm algorithm, unknown
 		 */
-		public static function hashString(val:String):uint 
+		public static function hashString(val:String):uint
 		{
-			var hash:uint = 5381;
+			var hash:uint = 0;
 			for (var i:uint = 0, l:uint = val.length; i < l; i++)
-				hash = ((hash << 5) + hash) ^ val.charCodeAt(i);
+				hash =  val.charCodeAt(i) + (hash << 6) + (hash << 16) - hash;
 			return hash;
 		}
 		
 		
-		public static function assert(test:Boolean, extra:String = "(no info)"):void 
+		public static function assert(test:Boolean, extra:String = "(no info)"):void
 		{
 			if (!test)
 				throw new Error("Assertion failed: " + extra);
