@@ -28,13 +28,13 @@
 		
 		public function AbcConstantPool()
 		{
-			_intMap       = new HashTable(0);
-			_uintMap      = new HashTable(0);
-			_doubleMap    = new HashTable(0);
-			_stringMap    = new HashTable(0);
-			_namespaceMap = new HashTable(0);
-			_nssetMap     = new HashTable(0);
-			_multinameMap = new HashTable(0);
+			_intMap       = new HashTable();
+			_uintMap      = new HashTable();
+			_doubleMap    = new HashTable();
+			_stringMap    = new HashTable();
+			_namespaceMap = new HashTable();
+			_nssetMap     = new HashTable();
+			_multinameMap = new HashTable();
 			
 			_intIdx       = new Vector.<int>();
 			_uintIdx      = new Vector.<uint>();
@@ -49,7 +49,7 @@
 		{
 			if (val == 0) return 0;
 			var index:uint = _intMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _intIdx.length + 1;
 				_intMap.write(val, index);
@@ -62,7 +62,7 @@
 		{
 			if (val == 0) return 0;
 			var index:uint = _uintMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _uintIdx.length + 1;
 				_uintMap.write(val, index);
@@ -75,7 +75,7 @@
 		{
 			if (isNaN(val)) return 0;
 			var index:uint = _doubleMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _doubleIdx.length + 1;
 				_doubleMap.write(val, index);
@@ -88,7 +88,7 @@
 		{
 			if (val == "" || !val) return 0;
 			var index:uint = _stringMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _stringIdx.length + 1;
 				_stringMap.write(val, index);
@@ -117,7 +117,7 @@
 		public function namespaceset(val:AvmNamespaceSet):uint 
 		{
 			var index:uint = _nssetMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _nssetIdx.length + 1;
 				_nssetMap.write(val, index);
@@ -129,7 +129,7 @@
 		public function namespace_(val:AvmNamespace):uint
 		{
 			var index:uint = _namespaceMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _namespaceIdx.length + 1;
 				_namespaceMap.write(val, index);
@@ -142,7 +142,7 @@
 		{
 			if (val.equalTo(MULTINAME_DEFAULT)) return 0;
 			var index:uint = _multinameMap.read(val);
-			if (index == 0)
+			if (index == null)
 			{
 				index = _multinameIdx.length + 1;
 				_multinameMap.write(val, index);

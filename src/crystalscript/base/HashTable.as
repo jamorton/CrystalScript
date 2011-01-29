@@ -22,7 +22,7 @@
 		
 		private static const MAX_LOAD_FACTOR:Number = 0.75;
 		
-		public function HashTable(def:* = null) 
+		public function HashTable() 
 		{
 			_default  = def;
 			_table    = new Vector.<HashEntry>(11);
@@ -38,7 +38,7 @@
 					return entry.value;
 				entry = entry.next;
 			}
-			return _default;
+			return null;
 		}
 		
 		public function write(key:*, val:*):void
