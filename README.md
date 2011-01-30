@@ -9,6 +9,7 @@ apps, as a plugin system, etc).
 Authors
 -------
 Design and Code by Jon '[Jonanin](http://www.github.com/Jonanin/)' Morton.
+
 Tons of help, inspiration, and guidance by Jasper '[magcius](http://www.github.com/magcius/)' St. Pierre of Mecheye Independent Studios.
 
 Project Overview

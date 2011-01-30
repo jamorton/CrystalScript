@@ -6,7 +6,7 @@
 	 * extremely flexible.
 	 * 
 	 * Comparison to builtin solutions: AS3's Object does not work well with
-	 * non-primitive types as keys, and the Dictionary class is purel reference
+	 * non-primitive types as keys, and the Dictionary class is purely reference
 	 * based. This hash table allows for custom hash and equality functions,
 	 * which makes it much more flexible.
 	 * 
@@ -59,10 +59,12 @@
 				return;
 			}
 			var list:HashEntry = _table[h];
-			while (list)
+			while (true)
 			{
 				if (eq(list.key, newEntry.key))
 					return;
+				if (list.next == null)
+					break;
 				list = list.next;
 			}
 			list.next = newEntry;
@@ -83,7 +85,7 @@
 		private function resize():void 
 		{
 			var oldTable:Vector.<HashEntry> = _table;
-			_table = new Vector.<HashEntry>(_table.length * 2 + 1);
+			_table = new Vector.<HashEntry>(_table.length * 2 - 1);
 			for(var i:uint = 0, k:uint = oldTable.length; i < k; i++) 
 			{
 				var entry:HashEntry = oldTable[i];
@@ -91,13 +93,20 @@
 			}
 		}
 		
+		/**
+		 * Fills an array with all entries that currently reside in the hash table.
+		 * Each element in the array is an object 'obj' with three properties:
+		 * 	obj.key   - the key that maps to this entry
+		 *  obj.value - the entry itself
+		 *  obj.hash  - a uint that specifies the internal hash used for this entry
+		 */
 		public function toArray():Array 
 		{
-			var i:uint, k:uint, j:uint, l:uint;
+			var i:uint, k:uint, list:HashEntry;
 			var arr:Array = new Array();
 			for (i = 0, k = _table.length; i < k; i++)
 			{
-				var list:HashEntry = _table[i];
+				list = _table[i];
 				while (list)
 				{
 					arr.push( { "key": list.key, "value": list.value, "hash": list.hash } );
@@ -129,7 +138,6 @@ internal class HashEntry
 	public var key:*;
 	public var hash:uint;
 	public var value:*;
-	
 	public var next:HashEntry;
 	
 	function HashEntry(k:*, h:*, v:*, n:HashEntry = null)

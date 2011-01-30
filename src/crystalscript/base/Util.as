@@ -33,13 +33,13 @@
 		
 		/**
 		 * @see http://www.cse.yorku.ca/~oz/hash.html
-		 * @author sdbm algorithm, unknown
+		 * @author djb2 algorithm, unknown
 		 */
 		public static function hashString(val:String):uint
 		{
-			var hash:uint = 0;
+			var hash:uint = 5381;
 			for (var i:uint = 0, l:uint = val.length; i < l; i++)
-				hash =  val.charCodeAt(i) + (hash << 6) + (hash << 16) - hash;
+				hash =  ((hash << 5) + hash) + val.AS3::charCodeAt(i);
 			return hash;
 		}
 		
