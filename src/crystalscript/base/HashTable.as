@@ -59,10 +59,12 @@
 				return;
 			}
 			var list:HashEntry = _table[h];
-			while (list)
+			while (true)
 			{
 				if (eq(list.key, newEntry.key))
 					return;
+				if (list.next == null)
+					break;
 				list = list.next;
 			}
 			list.next = newEntry;
