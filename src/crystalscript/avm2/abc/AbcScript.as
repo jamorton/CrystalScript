@@ -14,6 +14,7 @@ package crystalscript.avm2.abc
 		public function serialize(abc:AbcFile):AbcByteStream
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
+			abc.addMethodInfo(_init);
 			bytes.uint30(0); // traits
 			return bytes;
 		}

@@ -22,6 +22,14 @@ package crystalscript.avm2.abc
 		public function serialize(abc:AbcFile):AbcByteStream
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
+			bytes.uint30(abc.addMethodInfo(_method));
+			bytes.uint30(_maxStack);
+			bytes.uint30(_localCount);
+			bytes.uint30(0); // init_scope_depth
+			bytes.uint30(_maxScopeDepth);
+			bytes.uint30(_code.length);
+			bytes.addBytes(_code);
+			return bytes;
 		}
 		
 		public function get method():AbcMethodInfo { return _method; }

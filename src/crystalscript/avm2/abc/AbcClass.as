@@ -11,6 +11,8 @@ package crystalscript.avm2.abc
 		private static const CONSTANT_ClassInterface:uint   = 0x04;
 		private static const CONSTANT_ClassProtectedNs:uint = 0x08;
 		
+		private var _iinit:AbcMethodInfo;
+		private var _cinit:AbcMethodInfo;
 		private var _name:AvmQName;
 		private var _superName:IMultiname;
 		private var _protectedNs:IMultiname;

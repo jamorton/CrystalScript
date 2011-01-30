@@ -39,16 +39,15 @@
 			return bytes;
 		}
 		
-		public function addClass(val:AbcClass):uint      { return doAdd(val, _class);      }
-		public function addScript(val:AbcClass):uint     { return doAdd(val, _script);     }
-		public function addMethodInfo(val:AbcClass):uint { return doAdd(val, _methodInfo); }
-		public function addMethodBody(val:AbcClass):uint { return doAdd(val, _methodBody); }
+		public function addClass(val:AbcClass):uint           { return doAdd(val, _class);      }
+		public function addScript(val:AbcScript):uint         { return doAdd(val, _script);     }
+		public function addMethodInfo(val:AbcMethodInfo):uint { return doAdd(val, _methodInfo); }
+		public function addMethodBody(val:AbcMethodBody):uint { return doAdd(val, _methodBody); }
 		
-		private function serializeEntry(table:HashTable):AbcByteStream
+		private function serializeEntries(table:HashTable):AbcByteStream
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
 			var entries:Array = table.toArray();
-			bytes.uint30(table.size);
 			entries.sortOn("value", Array.NUMERIC);
 			for each (var entry:IAbcEntry in entries)
 			{
