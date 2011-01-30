@@ -9,7 +9,7 @@
 		private var _classes:HashTable;
 		private var _scripts:HashTable;
 		
-		public function AbcFile() 
+		public function AbcFile()
 		{
 			_constantPool = new AbcConstantPool();
 		}
