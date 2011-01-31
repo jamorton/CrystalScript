@@ -91,45 +91,43 @@
 			if (val < 0x80)
 			{
 				// 7 bits
-				_bytes.writeByte (val & 0x7F);
+				_bytes.writeByte(val & 0x7F);
 			}
 			else if (val < 0x4000)
 			{
 				// 14 bits
-				_bytes.writeByte ((val & 0x7F) | 0x80);
-				_bytes.writeByte ((val >> 7) & 0x7F);
+				_bytes.writeByte((val & 0x7F) | 0x80);
+				_bytes.writeByte((val >> 7)   & 0x7F);
 			}
 			else if (val < 0x200000)
 			{
 				// 21 bits
-				_bytes.writeByte ((val & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 7) & 0x7F) | 0x80);
-				_bytes.writeByte ((val >> 14) & 0x7F);
+				_bytes.writeByte((val & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 7)  & 0x7F) | 0x80);
+				_bytes.writeByte((val >> 14)  & 0x7F);
 			}
 			else if (val < 0x10000000)
 			{
 				// 28 bits
-				_bytes.writeByte ((val & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 7) & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 14) & 0x7F) | 0x80);
-				_bytes.writeByte ((val >> 21) & 0x7F);
+				_bytes.writeByte((val & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 7)  & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 14) & 0x7F) | 0x80);
+				_bytes.writeByte((val  >> 21) & 0x7F);
 			}
 			else
 			{
 				// 32 bits
-				_bytes.writeByte ((val & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 7) & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 14) & 0x7F) | 0x80);
-				_bytes.writeByte (((val >> 21) & 0x7F) | 0x80);
-				_bytes.writeByte ((val >> 28) & 0x7F);
+				_bytes.writeByte((val & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 7)  & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 14) & 0x7F) | 0x80);
+				_bytes.writeByte(((val >> 21) & 0x7F) | 0x80);
+				_bytes.writeByte((val >> 28)  & 0x7F);
 			}
 		}
 		
 		public function hexDump():String
 		{
-			var table:Array = [
-				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"
-			];
+			var table:Array = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 			var oldpos:int = _bytes.position;
 			var output:String = "";
 			_bytes.position = 0;
@@ -149,13 +147,12 @@
 		public function toString():String 
 		{
 			return _bytes.toString();
-
 		}
 		
 		public function get bytes():ByteArray { return _bytes; }
-		public function get length():uint { return _bytes.length; }
+		public function get length():uint     { return _bytes.length; }
 		
-		public function get position():uint { return _bytes.position }
+		public function get position():uint         { return _bytes.position }
 		public function set position(val:uint):void { _bytes.position = val };
 	}
 	
