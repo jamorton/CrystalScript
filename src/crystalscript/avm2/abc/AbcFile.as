@@ -23,6 +23,16 @@
 		
 		public function serialize():AbcByteStream
 		{
+			
+			var simpleSerialize:Function = function(table:HashTable):AbcByteStream
+			{
+				var bytes:AbcByteStream = new AbcByteStream();
+				var objs:Array = sortObjects(table);
+				for each (var entry:IAbcEntry in objs)
+					bytes.addBytes(entry.serialize(this));
+				return bytes;
+			}
+			
 			// we serialize everything topologically so that the entries that depend
 			// on other entries can add their children to the AbcFile first
 			// (e.g., almost all entries reference the constant pool, that is serialized last.
@@ -44,16 +54,11 @@
 		public function addMethodInfo(val:AbcMethodInfo):uint { return doAdd(val, _methodInfo); }
 		public function addMethodBody(val:AbcMethodBody):uint { return doAdd(val, _methodBody); }
 		
-		private function serializeEntries(table:HashTable):AbcByteStream
+		private function sortObjects(table:HashTable):Array
 		{
-			var bytes:AbcByteStream = new AbcByteStream();
 			var entries:Array = table.toArray();
 			entries.sortOn("value", Array.NUMERIC);
-			for each (var entry:IAbcEntry in entries)
-			{
-				bytes.addBytes(entry.serialize(this));
-			}
-			return bytes;
+			return entries;
 		}
 		
 		private static function doAdd(val:IAbcEntry, table:HashTable):uint
@@ -67,7 +72,7 @@
 			return index;
 		}
 		
-		public function get constantPool():AbcConstantPool { return _constantPool; }
+		public function get pool():AbcConstantPool { return _constantPool; }
 	}
 	
 }

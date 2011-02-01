@@ -33,10 +33,10 @@
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
 			bytes.uint30(paramCount);
-			bytes.uint30(abc.constantPool.multiname(_returnType));
+			bytes.uint30(abc.pool.multiname(_returnType));
 			for each (var param:IMultiname in _params)
-				bytes.uint30(abc.constantPool.multiname(param));
-			bytes.uint30(abc.constantPool.utf8(_name));
+				bytes.uint30(abc.pool.multiname(param));
+			bytes.uint30(abc.pool.utf8(_name));
 			bytes.uint8(flags);
 			/*
 			 * TODO

@@ -9,7 +9,7 @@
 	public class AbcConstantPool implements IAbcEntry
 	{
 		private var _ints:HashTable;
-		private var _uintsHashTable;
+		private var _uints:HashTable;
 		private var _doubles:HashTable;
 		private var _strings:HashTable;
 		private var _namespaces:HashTable;
@@ -99,7 +99,9 @@
 		
 		private function sortObjects(table:HashTable):Array
 		{
-			
+			var items:Array = table.toArray();
+			items.sortOn("value", Array.NUMERIC);
+			return items;
 		}
 		
 		public function serialize(abc:AbcFile):AbcByteStream
@@ -111,7 +113,7 @@
 			
 			/***** MULTINAMES ****/
 			var multiname_tmp:AbcByteStream = new AbcByteStream();
-			for each(var mn:Object in _multinameIdx) 
+			for each(var mn:Object in sortObjects(_multinames)) 
 			{
 				multiname_tmp.uint8(mn.kind);
 				switch (mn.kind)
@@ -133,7 +135,7 @@
 			
 			/***** NAMESPACE SETS ****/
 			var nsset_tmp:AbcByteStream = new AbcByteStream();
-			for each(var nss:AvmNamespaceSet in _nssetIdx) 
+			for each(var nss:AvmNamespaceSet in sortObjects(_nssets)) 
 			{
 				nsset_tmp.uint30(nss.length);
 				for each(var n:AvmNamespace in nss.namespaces)
@@ -142,42 +144,42 @@
 			
 			/***** NAMESPACES ****/
 			var ns_tmp:AbcByteStream = new AbcByteStream();
-			for each(var ns:AvmNamespace in _namespaceIdx)
+			for each(var ns:AvmNamespace in sortObjects(_namespaces))
 			{
 				ns_tmp.uint8(ns.kind);
 				ns_tmp.uint30(utf8(ns.name));
 			}
 			
 			/***** INTS ****/
-			bytes.uint30(_intIdx.length + 1);
-			for each(var i:int in _intIdx)
+			bytes.uint30(_ints.size + 1);
+			for each(var i:int in sortObjects(_ints))
 				bytes.int32(i);
 			
 			/***** UINTS ****/
-			bytes.uint30(_uintIdx.length + 1);
-			for each(var u:uint in _uintIdx)
+			bytes.uint30(_uints.size + 1);
+			for each(var u:uint in sortObjects(_uints))
 				bytes.uint32(u);
 			
 			/***** DOUBLES ****/
-			bytes.uint30(_doubleIdx.length + 1);
-			for each(var d:Number in _doubleIdx)
+			bytes.uint30(_doubles.size + 1);
+			for each(var d:Number in sortObjects(_doubles))
 				bytes.float64(d);
 			
 			/***** STRINGS ****/
-			bytes.uint30(_stringIdx.length + 1);
-			for each(var s:String in _stringIdx)
+			bytes.uint30(_strings.size + 1);
+			for each(var s:String in sortObjects(_strings))
 			{
 				bytes.uint30(utf8length(s));
 				bytes.utf8(s);
 			}
 			
-			bytes.uint30(_namespaceIdx.length + 1);
+			bytes.uint30(_namespaces.size + 1);
 			bytes.addBytes(ns_tmp);
 			
-			bytes.uint30(_nssetIdx.length + 1);
+			bytes.uint30(_nssets.size + 1);
 			bytes.addBytes(nsset_tmp);
 			
-			bytes.uint30(_multinameIdx.length + 1);
+			bytes.uint30(_multinames.size + 1);
 			bytes.addBytes(multiname_tmp);
 			
 			return bytes;

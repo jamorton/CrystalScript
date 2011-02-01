@@ -29,7 +29,6 @@ package crystalscript.avm2.abc
 		public function serialize(abc:AbcFile):AbcByteStream
 		{
 			var bytes:AbcByteStream = new AbcByteStream();
-			
 			return bytes;
 		}
 		
